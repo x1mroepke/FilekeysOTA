@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="CheckMyTrip:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CheckMyTrip_jar</output-path>
+    <root id="root">
+      <element id="archive" name="CheckMyTrip.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="CheckMyTrip" />
+      </element>
+      <element id="library" level="project" name="velocity-tools" />
+      <element id="library" level="application" name="scala-compiler-2.8.1" />
+      <element id="library" level="project" name="spring" />
+      <element id="library" level="project" name="webspec" />
+      <element id="library" level="application" name="joda" />
+      <element id="library" level="application" name="Java" />
+      <element id="library" level="project" name="velocity" />
+      <element id="library" level="application" name="scala-library-2.8.1" />
+    </root>
+  </artifact>
+</component>

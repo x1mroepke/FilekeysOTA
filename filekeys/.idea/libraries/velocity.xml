@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="velocity">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../3rdparty/velocity-1.7/lib" />
+      <root url="file://$PROJECT_DIR$/../3rdparty/velocity-1.7/lib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/../3rdparty/velocity-1.7/lib" recursive="false" />
+  </library>
+</component>
