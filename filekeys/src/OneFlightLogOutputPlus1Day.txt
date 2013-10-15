@@ -1,0 +1,33 @@
+117417 [main] INFO  CheckMyTrip  - tag(119).innerHTML=Flight 1
+117668 [main] INFO  CheckMyTrip  - tag(120).innerHTML=Sunday, July 31, 2011
+117934 [main] INFO  CheckMyTrip  - tag(121).innerHTML=&nbsp;confirmed
+118574 [main] INFO  CheckMyTrip  - tag(124).innerHTML=<SPAN class=nowrap>Departure:</SPAN>
+120385 [main] INFO  CheckMyTrip  - tag(125).innerHTML=17:25
+120656 [main] INFO  CheckMyTrip  - tag(126).innerHTML=Salvador, Brazil - 
+<FORM id=AirportGuidesSSA class=transparentForm method=post name=AirportGuidesSSA action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=GXyhNY9QLz2BPmq1MySP1d2b4dvvyLknTF2mslPBwvBgNvyG2dpy!-412411886!-1388584260?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT value=XCMTXITN type=hidden name=SITE> <INPUT value=GB type=hidden name=LANGUAGE> <INPUT value=SSA type=hidden name=AIRPORT_CODE> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesSSA'),'popupAirportGuides',610,620)">D.L.E. Magalhaes </A></FORM>
+120986 [main] INFO  CheckMyTrip  - tag(127).innerHTML=<SPAN class=nowrap>Arrival:</SPAN>
+121221 [main] INFO  CheckMyTrip  - tag(128).innerHTML=05:40 <SPAN class=textSmaller>+1 day(s) <SPAN class=ImgHelp9 onmouseover="javascript:NbDayBetweenDepAndArrDates.doTooltip(event,'You will be arriving 1 day(s) later')" onmouseout=javascript:NbDayBetweenDepAndArrDates.hideTip()>&nbsp;</SPAN> </SPAN>
+121471 [main] INFO  CheckMyTrip  - tag(129).innerHTML=Lisbon, Portugal - 
+<FORM id=AirportGuidesLIS class=transparentForm method=post name=AirportGuidesLIS action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=GXyhNY9QLz2BPmq1MySP1d2b4dvvyLknTF2mslPBwvBgNvyG2dpy!-412411886!-1388584260?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT value=XCMTXITN type=hidden name=SITE> <INPUT value=GB type=hidden name=LANGUAGE> <INPUT value=LIS type=hidden name=AIRPORT_CODE> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesLIS'),'popupAirportGuides',610,620)">Airport </A></FORM>, terminal 1 
+121897 [main] INFO  CheckMyTrip  - tag(131).innerHTML=Airline:
+122178 [main] INFO  CheckMyTrip  - tag(132).innerHTML=TAP Portugal&nbsp;TP156
+122601 [main] INFO  CheckMyTrip  - tag(134).innerHTML=Duration:
+122851 [main] INFO  CheckMyTrip  - tag(135).innerHTML=8:15
+123117 [main] INFO  CheckMyTrip  - tag(136).innerHTML=Aircraft:
+123399 [main] INFO  CheckMyTrip  - tag(137).innerHTML=<FORM id=AirCraftInfo332_Etkt class=transparentForm method=post name=AirCraftInfo332 action=/plnext/XCMTXITN/AirCraftInfo.action;jsessionid=GXyhNY9QLz2BPmq1MySP1d2b4dvvyLknTF2mslPBwvBgNvyG2dpy!-412411886!-1388584260?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirCraftInfo><INPUT value=XCMTXITN type=hidden name=SITE> <INPUT value=GB type=hidden name=LANGUAGE> <INPUT value=332 type=hidden name=AIRCRAFT_CODE> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirCraftInfo332'),'popupAirCraftInfo',610,600)">Airbus Industrie A330-200</A></FORM>
+123712 [main] INFO  CheckMyTrip  - tag(138).innerHTML=Last check in:
+124010 [main] INFO  CheckMyTrip  - tag(139).innerHTML=1:00 before flight
+124385 [main] INFO  CheckMyTrip  - tag(141).innerHTML=<SPAN class=textSmaller></SPAN>
+124636 [main] INFO  CheckMyTrip  - tag(142).innerHTML=Fare type:
+124902 [main] INFO  CheckMyTrip  - tag(143).innerHTML=Economy Restricted
+125184 [main] INFO  CheckMyTrip  - tag(144).innerHTML=Baggage:
+125465 [main] INFO  CheckMyTrip  - tag(145).innerHTML=2 piece(s) per traveller
+125700 [main] INFO  CheckMyTrip  - tag(146).innerHTML=<DIV id=id_eticketValidTitle_047-5113213946-47_2_0_Etkt>Validity:</DIV>
+125967 [main] INFO  CheckMyTrip  - tag(147).innerHTML=<DIV id=id_eticketValidBody_047-5113213946-47_2_0_Etkt><SPAN>Not valid before 2011 07 17 / Not valid after 2011 07 13 </SPAN></DIV>
+126217 [main] INFO  CheckMyTrip  - tag(148).innerHTML=<DIV id=id_eticketFareBasisTitle_047-5113213946-47_2_0_Etkt>Fare basis:</DIV>
+126454 [main] INFO  CheckMyTrip  - tag(149).innerHTML=<DIV id=id_eticketFareBasisBody_047-5113213946-47_2_0_Etkt><SPAN>KHDETO </SPAN></DIV>
+126908 [main] INFO  CheckMyTrip  - tag(151).innerHTML=<SPAN class=ImgPlate>&nbsp;</SPAN>BREAKFAST, DINNER 
+127174 [main] INFO  CheckMyTrip  - tag(152).innerHTML=<SPAN class=ImgFlightStatus>&nbsp;</SPAN> <A class=textSmaller href="javascript:redirectToAnExternalPopUp('/plnext/XCMTXITN/FlightStatusPopUp.action;jsessionid=GXyhNY9QLz2BPmq1MySP1d2b4dvvyLknTF2mslPBwvBgNvyG2dpy!-412411886!-1388584260?PAGE_TICKET=&amp;B_LOCATION=SSA&amp;E_LOCATION=LIS&amp;B_DATE=201107311725&amp;AIRLINE_CODE=TP&amp;FLIGHT_NUMBER=156&amp;SITE=XCMTXITN&amp;LANGUAGE=GB',550,450)">current flight status</A>
+127518 [main] INFO  CheckMyTrip  - tag(154).innerHTML=<SPAN class=ImgPlane2>&nbsp;</SPAN> 
+<DIV class="textChangeAirport textChangeAirportTextBold">Change of plane required. Time between flights : 2:55. </DIV>
+127940 [main] INFO  CheckMyTrip  - tag(156).innerHTML=&nbsp;

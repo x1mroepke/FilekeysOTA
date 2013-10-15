@@ -1,0 +1,2136 @@
+<HTML dir=ltr lang=en xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><HEAD><TITLE>checkmytrip.com - your travel itinerary</TITLE><!-- PTR03048448 -->
+<META content=IE=EmulateIE7 http-equiv=X-UA-Compatible>
+<SCRIPT type=text/javascript>
+	  		
+	  		
+	  	</SCRIPT>
+<!-- template name: cmtr --><BASE href="https://www.checkmytrip.com/plnext/XCMTXITN/201103291323/static/">
+<META content="text/html; charset=iso-8859-1" http-equiv=Content-Type>
+<META name=Description content="Search Flight Schedules, Search Flight Timetables, Get Current Flight Status, Find Hotels, Find Car Rental, Get Trip Tools, Plan Trip. Find Airport Information">
+<META name=Keywords content="Air availability, Flights, Flight schedules, Flight Times, Cheap Flights, Flight Status, Hotel Search, Car Rental, Business Travel, Travel Guides, World clock, World Time, E-travel"><LINK rel=stylesheet type=text/css href="https://www.checkmytrip.com/plnext/default/WPN_AeRE_v14.1_117O_180411/static/css_v2/main.css"><LINK rel=stylesheet type=text/css href="https://www.checkmytrip.com/plnext/default/WPN_AeRE_v14.1_117O_180411/static/css_v2/CONF.css"><LINK rel=stylesheet type=text/css href="./css/custom_image_cal.css" media="screen, print"><LINK rel=stylesheet type=text/css href="./css/custom_image_content.css" media="screen, print"><LINK rel=stylesheet type=text/css href="./css/custom_image_PLTG.css" media="screen, print"><LINK rel=stylesheet type=text/css href="./css/custom_image_TL.css" media="screen, print"><LINK rel=stylesheet type=text/css href="./css/custom_image_SeatMap.css" media="screen, print"><LINK rel=stylesheet type=text/css href="./css/custom_image_holiday.css" media="screen, print"><LINK rel=stylesheet type=text/css href="./css/custom.css" media="screen, print"><LINK rel=stylesheet type=text/css href="https://www.checkmytrip.com/plnext/default/WPN_AeRE_v14.1_117O_180411/static/css/style_print.css" media=print><LINK rel=stylesheet type=text/css href="./css/style_print.css" media=print>
+<SCRIPT language=JavaScript type=text/javascript src="https://www.checkmytrip.com/plnext/js/WPN_AeRE_v14.1_117O_180411/lib/WDSCore.js"></SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript src="https://www.checkmytrip.com/plnext/js/WPN_AeRE_v14.1_117O_180411/ui/PLTGWDSDefinitions.js"></SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript src="https://www.checkmytrip.com/plnext/js/WPN_AeRE_v14.1_117O_180411/ui/hbp/Common/utils/json.js"></SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript>
+<!--
+function emailToAFriend() {
+
+  if (CONF.divTabsCmp) {
+    document.forms.emailToAFriend.TAB_TO_MAIL.value = CONF.divTabsCmp.id;
+  } else {
+    document.forms.emailToAFriend.TAB_TO_MAIL.value = "tripSum";
+  }
+  document.forms.emailToAFriend.TICKET_TO_MAIL.value = '';
+  document.forms.emailToAFriend.JSP_NAME_KEY.value = "SITE_JSP_STATE_RETRIEVED";
+  submitFormToNewPopUp(document.forms.emailToAFriend,'popupEMail',550,520);
+
+}
+
+// -------------------------------------------------------------------------- \\
+// Close every viewclose links of the ticket sections (except if there is 
+// Only one ticket)
+// -------------------------------------------------------------------------- \\
+function CONF_closeTicketViews() {
+	
+}
+
+// -------------------------------------------------------------------------- \\
+// CONF_pageOnLoad
+// -------------------------------------------------------------------------- \\
+function CONF_pageOnLoad () {
+
+    
+  
+  
+
+  
+
+  
+
+  
+  
+  
+  // Get the last tab displayed (in case of a backbrowser with eticket tab enabled only) 
+  // and display it correctly
+  var backConfViewType = document.getElementById("backConfViewType");
+  var backConfViewTypeValue = "";
+  if (backConfViewType != null) {
+      backConfViewTypeValue = backConfViewType.value;
+  }
+  if (backConfViewTypeValue == "tripSum"){
+      CONF.tripSumTab();
+  } else if(backConfViewTypeValue == "eTicket") {
+      CONF.eticketTab();
+  } else if(backConfViewTypeValue == "eTicketWarning") {
+      CONF.eticketTabITRWarning();
+  } else {
+      if("false" == "true") {
+          // not E-Mail case (in case of E-Mail, displayEticketTab is set to false
+          backConfViewType.value = "tripSum";
+      }
+  }
+
+
+  
+  
+  
+}
+
+//-------------------------------------------------------------------------- \\
+//CONF_init
+//-------------------------------------------------------------------------- \\
+function CONF_init () {
+
+  // Set the string for the link in view/close details
+  CONF.viewDetailsStr = "view details";
+  CONF.closeDetailsStr = "close details";
+
+  CONF.divTabsCmp = document.getElementById("tripSum");
+  
+  // closes ticket views in the ITR part, to have a clear ITR tab display
+  CONF.closeTicketViews();
+  
+  CONF.initialisation = 1;
+
+  
+}
+
+// -------------------------------------------------------------------------- \\
+// CONF_printTicket
+//    Print only the chosen eticket
+// -------------------------------------------------------------------------- \\
+function CONF_printTicket(ticketId) {
+  var styleTxt = "";
+  
+  // We dont display passenger informations
+  styleTxt = styleTxt + "div#divTablePassenger {display:none!important;}";
+  styleTxt = styleTxt + "div#tablePassengerTitle {display:none!important;}";
+  // Add the style
+  this.addStyle("ticketPrintStyle","print",styleTxt);
+  window.print();
+  // Remove the style after the print
+  // Works only for IE
+  if(WDSBrowser.ie) {
+    this.addStyle("ticketPrintStyle","print","");
+  }
+}
+
+// -------------------------------------------------------------------------- \\
+// CONF_mailTicket
+//    Mail only the chosen eticket
+// -------------------------------------------------------------------------- \\
+function CONF_mailTicket(ticketId) {
+
+  document.forms.emailToAFriend.TAB_TO_MAIL.value = CONF.divTabsCmp.id;
+  document.forms.emailToAFriend.TICKET_TO_MAIL.value = ticketId;
+  document.forms.emailToAFriend.JSP_NAME_KEY.value = "SITE_JSP_STATE_RETRIEVED_ETICKET";
+  submitFormToNewPopUp(document.forms.emailToAFriend,'popupEMail',550,520);
+
+}
+
+// -------------------------------------------------------------------------- \\
+// CONF_checkCancelReservation
+// -------------------------------------------------------------------------- \\
+function CONF_checkCancelReservation() {
+  if (confirm("Are you sure you want to cancel your reservation?")) {
+	document.CONFCancelReservationForm.submit();
+  } 
+}
+// -------------------------------------------------------------------------- \\
+// CONF_checkCancelFlights
+// -------------------------------------------------------------------------- \\
+function CONF_checkCancelFlights() {
+  var msg;
+  
+    
+      msg = "Are you sure you want to delete all of your flights?  Note that this will cancel the entire reservation.";
+      if (confirm(msg)) {
+	    document.CONFCancelReservationForm.submit();
+      }
+    
+    
+   
+}
+
+// -------------------------------------------------------------------------- \\
+// PTR 1489503 : CONF_checkPendingFlights : allows to confirm the reservation 
+// if it is on hold and launches a pop up asking the user if he wants to confirm 
+// his reservation.
+// -------------------------------------------------------------------------- \\
+function CONF_checkPendingFlights() {
+  if (confirm("Are you sure you want to confirm your reservation?")) {
+	document.CONFPendingFlightsForm.submit();
+  } 
+}
+
+// -------------------------------------------------------------------------- \\
+// CR 1464840 : CONF_checkPayPendingFlights : allows to pay the reservation 
+// if it is on hold and launches a pop up asking the user if he wants to pay 
+// his reservation.
+// -------------------------------------------------------------------------- \\
+function CONF_checkPayPendingFlights() {
+  if (confirm("Are you sure you want to pay your reservation?")) {
+  document.CONFPayPendingFlightsForm.submit();
+  } 
+}
+
+// -------------------------------------------------------------------------- \\
+// PTR 2385272 : CONF_checkReconfirmFlights : allows to reconfirm flights
+// -------------------------------------------------------------------------- \\
+function CONF_checkReconfirmFlights() {
+  if (confirm("Are you sure you want to reconfirm yours flights?")) {
+  document.CONFReconfirmForm.submit();
+  }
+}
+
+// -------------------------------------------------------------------------- \\
+// CR 1882880 : CONF_checkCancelCar : allow to cancel a car reservation
+// -------------------------------------------------------------------------- \\
+function CONF_checkCancelCar(itemId, showCancellationPopup) {
+  if (showCancellationPopup){
+	this.displayCancellationPopup(itemId);
+  } else {
+    var msg;
+    
+      
+      
+        msg = "Are you sure you want to cancel this car?";
+        if (confirm(msg)) {
+          WDSCommon.updateTag(document.CONFCancelCarForm, "ITEM_ID", itemId);
+          document.CONFCancelCarForm.submit();
+        }      
+      
+    
+  }
+}
+
+
+function CONF_CancelSegmentOrEntirePnr(ITEM_ID, ConfirmMessage, onlyOneHotel)
+{   
+	//Confirmation popup
+	this.m_yesNoJsWindow = new YesNoJsWindow();
+	var _i18n = {};
+	_i18n['Yes'] 	= "Yes";
+	_i18n['No'] 	= "No";
+	this.m_yesNoJsWindow.setI18n(_i18n);
+	//When only one hotel segment, cancel the whole PNR
+  if (onlyOneHotel) {
+	this.m_yesNoJsWindow.setJsOnYes(function(){document.CONFCancelReservationForm.submit();});	
+	ConfirmMessage = "Are you sure you want to really cancel the entire PNR ?";	
+  }else{
+	this.m_yesNoJsWindow.setJsOnYes(function(){document.CONFRemoveHotelSegmentForm.submit();});
+	document.CONFRemoveHotelSegmentForm.ITEM_ID.value=ITEM_ID;
+  }
+    this.m_yesNoJsWindow.setWidth("25%");	
+    
+     //Yes/No Js Window
+		this.m_yesNoJsWindow.setContent(ConfirmMessage);
+        this.m_yesNoJsWindow.open();
+}
+
+
+function CONF_AddRoom(ITEM_ID, ConfirmMessage,B_DATE,E_DATE,PROPERTY,COUNTRY_CODE,ACCESS_LEVEL, HOTEL_STATUS, CITY_NAME, CITY_CODE, LONGITUDE, LATITUDE)
+{ 
+	document.CONFAddRoomForm.B_DATE.value=B_DATE;
+	document.CONFAddRoomForm.E_DATE.value=E_DATE;
+	document.CONFAddRoomForm.PROPERTY.value=PROPERTY;
+	document.CONFAddRoomForm.COUNTRY_CODE.value=COUNTRY_CODE;
+	document.CONFAddRoomForm.ACCESS_LEVEL.value=ACCESS_LEVEL;
+	document.CONFAddRoomForm.LONGITUDE.value=LONGITUDE;
+	document.CONFAddRoomForm.LATITUDE.value=LATITUDE;
+	document.CONFAddRoomForm.HOT_PARAMS.value="|sT-C|cI-"+CITY_NAME+"|cIC-"+CITY_CODE+"|cIA-D|cICt-"+COUNTRY_CODE+"|SCI||";
+	document.CONFAddRoomForm.submit();   
+}
+
+function CONF_ChangeHotelReservation(ITEM_ID,ConfirmMessage,B_DATE,E_DATE,B_LOCATION,COUNTRY_CODE,CITY_CODE,CITY_NAME)
+{
+	//Confirmation popup
+	this.m_yesNoJsWindow = new YesNoJsWindow();
+	var _i18n = {};
+	_i18n['Yes'] 	= "Yes";
+	_i18n['No'] 	= "No";
+	this.m_yesNoJsWindow.setI18n(_i18n);
+	this.m_yesNoJsWindow.setJsOnYes(function(){document.CONFChangeHotelReservationForm.submit();});
+
+    this.m_yesNoJsWindow.setWidth("25%");	
+      
+        document.CONFChangeHotelReservationForm.ITEM_ID.value=ITEM_ID;
+        document.CONFChangeHotelReservationForm.B_DATE.value=B_DATE;
+        document.CONFChangeHotelReservationForm.E_DATE.value=E_DATE;
+        document.CONFChangeHotelReservationForm.B_LOCATION.value=B_LOCATION;
+        document.CONFChangeHotelReservationForm.COUNTRY_CODE.value=COUNTRY_CODE;
+        document.CONFChangeHotelReservationForm.HOT_PARAMS.value="|sT-C|cI-"+CITY_NAME+"|cIC-"+CITY_CODE+"|cIA-D|cICt-"+COUNTRY_CODE+"|SCI||";
+
+     //Yes/No Js Window
+		this.m_yesNoJsWindow.setContent(ConfirmMessage);
+        this.m_yesNoJsWindow.open();
+      	
+
+}
+
+function CONF_ChangeRoomReservation(ITEM_ID, ConfirmMessage,B_DATE,E_DATE,PROPERTY,COUNTRY_CODE,ACCESS_LEVEL, HOTEL_STATUS, CITY_NAME, CITY_CODE, LONGITUDE, LATITUDE)
+{ 
+	//Confirmation popup
+	this.m_yesNoJsWindow = new YesNoJsWindow();
+	var _i18n = {};
+	_i18n['Yes'] 	= "Yes";
+	_i18n['No'] 	= "No";
+	this.m_yesNoJsWindow.setI18n(_i18n);
+	this.m_yesNoJsWindow.setJsOnYes(function(){document.CONFChangeRoomReservationForm.submit();});
+    this.m_yesNoJsWindow.setWidth("25%");	
+    
+        document.CONFChangeRoomReservationForm.ITEM_ID.value=ITEM_ID;
+        document.CONFChangeRoomReservationForm.B_DATE.value=B_DATE;
+        document.CONFChangeRoomReservationForm.E_DATE.value=E_DATE;
+        document.CONFChangeRoomReservationForm.PROPERTY.value=PROPERTY;
+        document.CONFChangeRoomReservationForm.COUNTRY_CODE.value=COUNTRY_CODE;
+        document.CONFChangeRoomReservationForm.ACCESS_LEVEL.value=ACCESS_LEVEL;
+        document.CONFChangeRoomReservationForm.LONGITUDE.value=LONGITUDE;
+        document.CONFChangeRoomReservationForm.LATITUDE.value=LATITUDE;
+        document.CONFChangeRoomReservationForm.HOT_PARAMS.value="|sT-C|cI-"+CITY_NAME+"|cIC-"+CITY_CODE+"|cIA-D|cICt-"+COUNTRY_CODE+"|SCI||";
+
+     //Yes/No Js Window
+		this.m_yesNoJsWindow.setContent(ConfirmMessage);
+        this.m_yesNoJsWindow.open();
+  
+          
+}
+
+
+
+/**
+ * create a popup that will be used to confirm the cancellation of a car segment
+ */
+function CONF_initCancellationPopup(){
+	c.require('uic.dialog.SimpleDialog');
+	this.cancellationPopup = new uic.dialog.SimpleDialog({
+		isCentered: true,
+		isModal: true,
+		isAutoResized: true,
+		width: 370,
+		height: 130,
+		isClosable: true,
+		title: "Cancel this car?",
+		content: "",
+		id: "carCancellationPopup"
+	});
+}
+
+function CONF_initMap(){
+	this.map = $("confMap", {_section: "confMapSection"}); // undefined if the map is not generated
+	this.mapStatus = "notLoaded";
+
+	if (this.map){
+		// the map is generated hidden, it must be set to visible
+		// however, it must be delayed otherwise it won't work
+		// (some existing scripts seems to take some time at load time?)
+		setTimeout("CONF.initializeMap()", 2000);
+	}
+}
+
+//-->
+</SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript src="https://www.checkmytrip.com/plnext/js/WPN_AeRE_v14.1_117O_180411/ui/CONF.js"></SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript src="https://www.checkmytrip.com/plnext/js/WPN_AeRE_v14.1_117O_180411/ui/script.js"></SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript src="https://www.checkmytrip.com/plnext/js/WPN_AeRE_v14.1_117O_180411/ui/ExtraInfoPopUp.js"></SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript src="https://www.checkmytrip.com/plnext/js/WPN_AeRE_v14.1_117O_180411/ui/FarefamilyDescriptionPopUp.js"></SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript src="https://www.checkmytrip.com/plnext/js/WPN_AeRE_v14.1_117O_180411/ui/dw_tooltip.js"></SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript src="https://www.checkmytrip.com/plnext/js/WPN_AeRE_v14.1_117O_180411/ui/dw_event.js"></SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript src="https://www.checkmytrip.com/plnext/js/WPN_AeRE_v14.1_117O_180411/ui/dw_viewport.js"></SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript src="https://www.checkmytrip.com/plnext/js/WPN_AeRE_v14.1_117O_180411/ui/NbDayBetweenDepAndArrDates.js"></SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript src="https://www.checkmytrip.com/plnext/js/WPN_AeRE_v14.1_117O_180411/ui/Tips.js"></SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript src="https://www.checkmytrip.com/plnext/js/WPN_AeRE_v14.1_117O_180411/ui/DOM.js"></SCRIPT>
+
+<SCRIPT language=javascript type=text/javascript>
+<!--
+
+var LOCK_CHECK_ENTER = false;
+
+Netscape = (navigator.appName.substring(0,3) == "Net");
+function checkEnter(event) {
+  var code = 0;
+  if(Netscape) {
+    code = event.which;
+  } else {
+    code = window.event.keyCode;
+  }
+  if (code == 13) {
+    var result = false;
+
+    return result;
+  }
+}
+document.onkeypress = checkEnter;
+-->
+</SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript>
+      <!--
+      function nameTheWindow() {
+        if (!window.opener && window.name == '') {
+          window.name='mainplnext';
+        }
+      }
+      function sellingPlatformLock() { }
+
+      
+      
+      //-->
+      </SCRIPT>
+
+<STYLE type=text/css media=screen>#massiveGoodSwf {
+	VISIBILITY: hidden
+}
+</STYLE>
+</HEAD>
+<BODY id=cmtr onload="nameTheWindow(); javascript:CONF.pageOnLoad();javascript:Tooltip.init();; " onunload="">
+<DIV style="DISPLAY: none" id=customDHTML>
+<CENTER>
+<FORM name=custom>
+<TABLE border=1>
+<TBODY>
+<TR>
+<TD><B>segment information 0:</B></TD>
+<TD></TD></TR>
+<TR>
+<TD><B>segment 0:</B></TD>
+<TD>departure <INPUT id=departureCode_0_0 name=departureCode_0_0 value=FRA> <BR>departure city code <INPUT id=departureCityCode_0_0 name=departureCityCode_0_0 value=FRA> <BR>departure city <INPUT id=departureCity_0_0 name=departureCity_0_0 value=Frankfurt> <BR>departure country code <INPUT id=departureCountryCode_0_0 name=departureCountryCode_0_0 value=DE> <BR>arrival <INPUT id=arrivalCode_0_0 name=arrivalCode_0_0 value=LIS> <BR>arrival city code <INPUT id=arrivalCityCode_0_0 name=arrivalCityCode_0_0 value=LIS> <BR>arrival city <INPUT id=arrivalCity_0_0 name=arrivalCity_0_0 value=Lisbon> <BR>arrival country code <INPUT id=arrivalCountryCode_0_0 name=arrivalCountryCode_0_0 value=PT> <BR>departure date <INPUT id=departureDate_0_0 name=departureDate_0_0 value="Sat Oct 01 13:30:00 GMT 2011"> <BR>arrival date <INPUT id=arrivalDate_0_0 name=arrivalDate_0_0 value="Sat Oct 01 15:30:00 GMT 2011"> <BR>flightNumber <INPUT id=flightNumber_0_0 name=flightNumber_0_0 value=575> <BR>airline Name <INPUT id=airlineName_0_0 name=airlineName_0_0 value="TAP Portugal"> <BR>airline Code <INPUT id=airlineCode_0_0 name=airlineCode_0_0 value=TP> <BR></TD></TR>fare Family Name <INPUT id=fareFamilyName_0 name=fareFamilyName_0> 
+<TR>
+<TD><B>segment information 1:</B></TD>
+<TD></TD></TR>
+<TR>
+<TD><B>segment 0:</B></TD>
+<TD>departure <INPUT id=departureCode_1_0 name=departureCode_1_0 value=LIS> <BR>departure city code <INPUT id=departureCityCode_1_0 name=departureCityCode_1_0 value=LIS> <BR>departure city <INPUT id=departureCity_1_0 name=departureCity_1_0 value=Lisbon> <BR>departure country code <INPUT id=departureCountryCode_1_0 name=departureCountryCode_1_0 value=PT> <BR>arrival <INPUT id=arrivalCode_1_0 name=arrivalCode_1_0 value=BSB> <BR>arrival city code <INPUT id=arrivalCityCode_1_0 name=arrivalCityCode_1_0 value=BSB> <BR>arrival city <INPUT id=arrivalCity_1_0 name=arrivalCity_1_0 value=Brasilia> <BR>arrival country code <INPUT id=arrivalCountryCode_1_0 name=arrivalCountryCode_1_0 value=BR> <BR>departure date <INPUT id=departureDate_1_0 name=departureDate_1_0 value="Sun Oct 02 09:55:00 GMT 2011"> <BR>arrival date <INPUT id=arrivalDate_1_0 name=arrivalDate_1_0 value="Sun Oct 02 15:35:00 GMT 2011"> <BR>flightNumber <INPUT id=flightNumber_1_0 name=flightNumber_1_0 value=4175> <BR>airline Name <INPUT id=airlineName_1_0 name=airlineName_1_0 value="TAP Portugal"> <BR>airline Code <INPUT id=airlineCode_1_0 name=airlineCode_1_0 value=TP> <BR></TD></TR>fare Family Name <INPUT id=fareFamilyName_1 name=fareFamilyName_1> 
+<TR>
+<TD><B>segment information 2:</B></TD>
+<TD></TD></TR>
+<TR>
+<TD><B>segment 0:</B></TD>
+<TD>departure <INPUT id=departureCode_2_0 name=departureCode_2_0 value=BSB> <BR>departure city code <INPUT id=departureCityCode_2_0 name=departureCityCode_2_0 value=BSB> <BR>departure city <INPUT id=departureCity_2_0 name=departureCity_2_0 value=Brasilia> <BR>departure country code <INPUT id=departureCountryCode_2_0 name=departureCountryCode_2_0 value=BR> <BR>arrival <INPUT id=arrivalCode_2_0 name=arrivalCode_2_0 value=CGB> <BR>arrival city code <INPUT id=arrivalCityCode_2_0 name=arrivalCityCode_2_0 value=CGB> <BR>arrival city <INPUT id=arrivalCity_2_0 name=arrivalCity_2_0 value=Cuiaba> <BR>arrival country code <INPUT id=arrivalCountryCode_2_0 name=arrivalCountryCode_2_0 value=BR> <BR>departure date <INPUT id=departureDate_2_0 name=departureDate_2_0 value="Mon Oct 03 09:36:00 GMT 2011"> <BR>arrival date <INPUT id=arrivalDate_2_0 name=arrivalDate_2_0 value="Mon Oct 03 10:30:00 GMT 2011"> <BR>flightNumber <INPUT id=flightNumber_2_0 name=flightNumber_2_0 value=1636> <BR>airline Name <INPUT id=airlineName_2_0 name=airlineName_2_0 value="GOL VRG Linhas Aereas"> <BR>airline Code <INPUT id=airlineCode_2_0 name=airlineCode_2_0 value=G3> <BR></TD></TR>fare Family Name <INPUT id=fareFamilyName_2 name=fareFamilyName_2> 
+<TR>
+<TD><B>segment information 3:</B></TD>
+<TD></TD></TR>
+<TR>
+<TD><B>segment 0:</B></TD>
+<TD>departure <INPUT id=departureCode_3_0 name=departureCode_3_0 value=CGB> <BR>departure city code <INPUT id=departureCityCode_3_0 name=departureCityCode_3_0 value=CGB> <BR>departure city <INPUT id=departureCity_3_0 name=departureCity_3_0 value=Cuiaba> <BR>departure country code <INPUT id=departureCountryCode_3_0 name=departureCountryCode_3_0 value=BR> <BR>arrival <INPUT id=arrivalCode_3_0 name=arrivalCode_3_0 value=BSB> <BR>arrival city code <INPUT id=arrivalCityCode_3_0 name=arrivalCityCode_3_0 value=BSB> <BR>arrival city <INPUT id=arrivalCity_3_0 name=arrivalCity_3_0 value=Brasilia> <BR>arrival country code <INPUT id=arrivalCountryCode_3_0 name=arrivalCountryCode_3_0 value=BR> <BR>departure date <INPUT id=departureDate_3_0 name=departureDate_3_0 value="Fri Oct 07 18:20:00 GMT 2011"> <BR>arrival date <INPUT id=arrivalDate_3_0 name=arrivalDate_3_0 value="Fri Oct 07 20:54:00 GMT 2011"> <BR>flightNumber <INPUT id=flightNumber_3_0 name=flightNumber_3_0 value=1637> <BR>airline Name <INPUT id=airlineName_3_0 name=airlineName_3_0 value="GOL VRG Linhas Aereas"> <BR>airline Code <INPUT id=airlineCode_3_0 name=airlineCode_3_0 value=G3> <BR></TD></TR>
+<TR>
+<TD><B>segment 1:</B></TD>
+<TD>departure <INPUT id=departureCode_3_1 name=departureCode_3_1 value=BSB> <BR>departure city code <INPUT id=departureCityCode_3_1 name=departureCityCode_3_1 value=BSB> <BR>departure city <INPUT id=departureCity_3_1 name=departureCity_3_1 value=Brasilia> <BR>departure country code <INPUT id=departureCountryCode_3_1 name=departureCountryCode_3_1 value=BR> <BR>arrival <INPUT id=arrivalCode_3_1 name=arrivalCode_3_1 value=IGU> <BR>arrival city code <INPUT id=arrivalCityCode_3_1 name=arrivalCityCode_3_1 value=IGU> <BR>arrival city <INPUT id=arrivalCity_3_1 name=arrivalCity_3_1 value="Iguassu Falls"> <BR>arrival country code <INPUT id=arrivalCountryCode_3_1 name=arrivalCountryCode_3_1 value=BR> <BR>departure date <INPUT id=departureDate_3_1 name=departureDate_3_1 value="Fri Oct 07 21:35:00 GMT 2011"> <BR>arrival date <INPUT id=arrivalDate_3_1 name=arrivalDate_3_1 value="Sat Oct 08 01:10:00 GMT 2011"> <BR>flightNumber <INPUT id=flightNumber_3_1 name=flightNumber_3_1 value=1631> <BR>airline Name <INPUT id=airlineName_3_1 name=airlineName_3_1 value="GOL VRG Linhas Aereas"> <BR>airline Code <INPUT id=airlineCode_3_1 name=airlineCode_3_1 value=G3> <BR></TD></TR>fare Family Name <INPUT id=fareFamilyName_3 name=fareFamilyName_3> 
+<TR>
+<TD><B>segment information 4:</B></TD>
+<TD></TD></TR>
+<TR>
+<TD><B>segment 0:</B></TD>
+<TD>departure <INPUT id=departureCode_4_0 name=departureCode_4_0 value=IGU> <BR>departure city code <INPUT id=departureCityCode_4_0 name=departureCityCode_4_0 value=IGU> <BR>departure city <INPUT id=departureCity_4_0 name=departureCity_4_0 value="Iguassu Falls"> <BR>departure country code <INPUT id=departureCountryCode_4_0 name=departureCountryCode_4_0 value=BR> <BR>arrival <INPUT id=arrivalCode_4_0 name=arrivalCode_4_0 value=CWB> <BR>arrival city code <INPUT id=arrivalCityCode_4_0 name=arrivalCityCode_4_0 value=CWB> <BR>arrival city <INPUT id=arrivalCity_4_0 name=arrivalCity_4_0 value=Curitiba> <BR>arrival country code <INPUT id=arrivalCountryCode_4_0 name=arrivalCountryCode_4_0 value=BR> <BR>departure date <INPUT id=departureDate_4_0 name=departureDate_4_0 value="Sun Oct 09 14:00:00 GMT 2011"> <BR>arrival date <INPUT id=arrivalDate_4_0 name=arrivalDate_4_0 value="Sun Oct 09 14:55:00 GMT 2011"> <BR>flightNumber <INPUT id=flightNumber_4_0 name=flightNumber_4_0 value=1851> <BR>airline Name <INPUT id=airlineName_4_0 name=airlineName_4_0 value="GOL VRG Linhas Aereas"> <BR>airline Code <INPUT id=airlineCode_4_0 name=airlineCode_4_0 value=G3> <BR></TD></TR>fare Family Name <INPUT id=fareFamilyName_4 name=fareFamilyName_4> 
+<TR>
+<TD><B>segment information 5:</B></TD>
+<TD></TD></TR>
+<TR>
+<TD><B>segment 0:</B></TD>
+<TD>departure <INPUT id=departureCode_5_0 name=departureCode_5_0 value=GIG> <BR>departure city code <INPUT id=departureCityCode_5_0 name=departureCityCode_5_0 value=RIO> <BR>departure city <INPUT id=departureCity_5_0 name=departureCity_5_0 value="Rio De Janeiro"> <BR>departure country code <INPUT id=departureCountryCode_5_0 name=departureCountryCode_5_0 value=BR> <BR>arrival <INPUT id=arrivalCode_5_0 name=arrivalCode_5_0 value=LIS> <BR>arrival city code <INPUT id=arrivalCityCode_5_0 name=arrivalCityCode_5_0 value=LIS> <BR>arrival city <INPUT id=arrivalCity_5_0 name=arrivalCity_5_0 value=Lisbon> <BR>arrival country code <INPUT id=arrivalCountryCode_5_0 name=arrivalCountryCode_5_0 value=PT> <BR>departure date <INPUT id=departureDate_5_0 name=departureDate_5_0 value="Sun Oct 16 18:20:00 GMT 2011"> <BR>arrival date <INPUT id=arrivalDate_5_0 name=arrivalDate_5_0 value="Mon Oct 17 07:00:00 GMT 2011"> <BR>flightNumber <INPUT id=flightNumber_5_0 name=flightNumber_5_0 value=178> <BR>airline Name <INPUT id=airlineName_5_0 name=airlineName_5_0 value="TAP Portugal"> <BR>airline Code <INPUT id=airlineCode_5_0 name=airlineCode_5_0 value=TP> <BR></TD></TR>
+<TR>
+<TD><B>segment 1:</B></TD>
+<TD>departure <INPUT id=departureCode_5_1 name=departureCode_5_1 value=LIS> <BR>departure city code <INPUT id=departureCityCode_5_1 name=departureCityCode_5_1 value=LIS> <BR>departure city <INPUT id=departureCity_5_1 name=departureCity_5_1 value=Lisbon> <BR>departure country code <INPUT id=departureCountryCode_5_1 name=departureCountryCode_5_1 value=PT> <BR>arrival <INPUT id=arrivalCode_5_1 name=arrivalCode_5_1 value=FRA> <BR>arrival city code <INPUT id=arrivalCityCode_5_1 name=arrivalCityCode_5_1 value=FRA> <BR>arrival city <INPUT id=arrivalCity_5_1 name=arrivalCity_5_1 value=Frankfurt> <BR>arrival country code <INPUT id=arrivalCountryCode_5_1 name=arrivalCountryCode_5_1 value=DE> <BR>departure date <INPUT id=departureDate_5_1 name=departureDate_5_1 value="Mon Oct 17 08:35:00 GMT 2011"> <BR>arrival date <INPUT id=arrivalDate_5_1 name=arrivalDate_5_1 value="Mon Oct 17 12:40:00 GMT 2011"> <BR>flightNumber <INPUT id=flightNumber_5_1 name=flightNumber_5_1 value=570> <BR>airline Name <INPUT id=airlineName_5_1 name=airlineName_5_1 value="TAP Portugal"> <BR>airline Code <INPUT id=airlineCode_5_1 name=airlineCode_5_1 value=TP> <BR></TD></TR>fare Family Name <INPUT id=fareFamilyName_5 name=fareFamilyName_5> 
+<TR>
+<TD>Number of Traveller : </TD>
+<TD><INPUT id=nbTrav name=nbTrav value=1></TD></TR>
+<TR>
+<TD>Cabin : </TD>
+<TD><INPUT id=cabin name=cabin></TD></TR>
+<TR>
+<TD>Language : </TD>
+<TD><INPUT id=language name=language value=GB></TD></TR>
+<TR>
+<TD>Office Id : </TD>
+<TD><INPUT id=officeId name=officeId value=NCE1A0RTI></TD></TR>
+<TR>
+<TD>Initial Office Id : </TD>
+<TD><INPUT id=initialOfficeId name=initialOfficeId value=FLNB2212M></TD></TR>
+<TR>
+<TD>Currency : </TD>
+<TD><INPUT id=currency name=currency></TD></TR>
+<TR>
+<TD>Total Price : </TD>
+<TD><INPUT id=totalPrice name=totalPrice></TD></TR>
+<TR>
+<TD><B>PNR information:</B></TD>
+<TD></TD></TR>
+<TR>
+<TD>pnr : </TD>
+<TD><INPUT id=pnrNbr name=pnrNbr value=X792MS></TD></TR>
+<TR>
+<TD>airline record : </TD>
+<TD><INPUT id=airLineConfNbr name=airLineConfNbr value="TAP Portugal:X792MS"><INPUT id=airLineConfNbr name=airLineConfNbr value="GOL VRG Linhas Aereas:FC8MYD"><INPUT id=airLineConfNbr name=airLineConfNbr value="GOL VRG Linhas Aereas:JH9W8B"></TD></TR>
+<TR>
+<TD>pnr ticketing method : </TD>
+<TD><INPUT id=pnrTicketingMethod name=pnrTicketingMethod></TD></TR>
+<TR>
+<TD>pnr Cabin : </TD>
+<TD><INPUT id=pnrCabin name=pnrCabin value=R></TD></TR>
+<TR>
+<TD>gds : </TD>
+<TD><INPUT id=pnrGDS name=pnrGDS value=1A></TD></TR>
+<TR>
+<TD>pnr creation Date : </TD>
+<TD><INPUT id=pnrCreationDate name=pnrCreationDate value="Thu Mar 31 17:12:00 GMT 2011"></TD></TR>
+<TR>
+<TD>pnr transaction Date : </TD>
+<TD><INPUT id=pnrEndTransactionDate name=pnrEndTransactionDate value="Fri Apr 15 20:27:00 GMT 2011"></TD></TR>
+<TR>
+<TD>pnr last modification Date : </TD>
+<TD><INPUT id=pnrLastModifDate name=pnrLastModifDate></TD></TR>
+<TR>
+<TD><B>traveller information:</B></TD>
+<TD></TD></TR>
+<TR>
+<TD>First name : </TD>
+<TD><INPUT id=primaryTravellerFirstName name=primaryTravellerFirstName value=Manfred></TD></TR>
+<TR>
+<TD>Last name : </TD>
+<TD><INPUT id=primaryTravellerLastName name=primaryTravellerLastName value=Siekmann></TD></TR>
+<TR>
+<TD>Pax type : </TD>
+<TD><INPUT id=primaryTravellerPaxType name=primaryTravellerPaxType value=ADT></TD></TR>
+<TR>
+<TD>passport country code : </TD>
+<TD><INPUT id=primaryTravellerPassportCountryCode name=primaryTravellerPassportCountryCode></TD></TR>
+<TR>
+<TD>passport number : </TD>
+<TD><INPUT id=primaryTravellerPassportNumber name=primaryTravellerPassportNumber></TD></TR>
+<TR>
+<TD>email 1 : </TD>
+<TD><INPUT id=primaryTravellerEmail1 name=primaryTravellerEmail1></TD></TR>
+<TR>
+<TD>email 2 : </TD>
+<TD><INPUT id=primaryTravellerEmail2 name=primaryTravellerEmail2></TD></TR>
+<TR>
+<TD>email 3 : </TD>
+<TD><INPUT id=primaryTravellerEmail3 name=primaryTravellerEmail3></TD></TR>
+<TR>
+<TD>Home phone : </TD>
+<TD><INPUT id=primaryTravellerHomePhone1 name=primaryTravellerHomePhone1></TD></TR>
+<TR>
+<TD>Mobile phone : </TD>
+<TD><INPUT id=primaryTravellerMobilePhone1 name=primaryTravellerMobilePhone1></TD></TR>
+<TR>
+<TD>Business phone : </TD>
+<TD><INPUT id=primaryTravellerBusinessPhone1 name=primaryTravellerBusinessPhone1></TD></TR>
+<TR>
+<TD>Fax : </TD>
+<TD><INPUT id=primaryTravellerFax1 name=primaryTravellerFax1></TD></TR>
+<TR>
+<TD>Other : </TD>
+<TD><INPUT id=primaryTravellerOtherPhone1 name=primaryTravellerOtherPhone1></TD></TR>
+<TR>
+<TD>Pager : </TD>
+<TD><INPUT id=primaryTravellerPager1 name=primaryTravellerPager1></TD></TR>
+<TR>
+<TD>emergency contact name : </TD>
+<TD><INPUT id=primaryTravellerEmergencyName name=primaryTravellerEmergencyName></TD></TR>
+<TR>
+<TD>emergency contact phone : </TD>
+<TD><INPUT id=primaryTravellerEmergencyPhone name=primaryTravellerEmergencyPhone></TD></TR>
+<TR>
+<TD><B>Mode of Payment :</B> </TD>
+<TD></TD></TR>
+<TR>
+<TD>seat preference :</TD>
+<TD><INPUT id=seatMapSelectionList name=seatMapSelectionList><BR></TD></TR>
+<TR>
+<TD>ext id :</TD>
+<TD><INPUT id=cust_external_id name=cust_external_id></TD></TR>
+<TR>
+<TD>templateName :</TD>
+<TD><INPUT id=custom_templateName name=custom_templateName value=cmtr> </TD></TR>
+<TR>
+<TD>Portal Environment Variable 1:</TD>
+<TD><INPUT id=pe_variable1 name=pe_variable1> </TD></TR>
+<TR>
+<TD>Portal Environment Variable 2:</TD>
+<TD><INPUT id=pe_variable2 name=pe_variable2> </TD></TR>
+<TR>
+<TD>Portal Environment Variable 3:</TD>
+<TD><INPUT id=pe_variable3 name=pe_variable3> </TD></TR>
+<TR>
+<TD>Portal Environment Variable 4:</TD>
+<TD><INPUT id=pe_variable4 name=pe_variable4> </TD></TR>
+<TR>
+<TD>Portal Environment Variable 5:</TD>
+<TD><INPUT id=pe_variable5 name=pe_variable5> </TD></TR>
+<TR>
+<TD>Flex Pricer Mode:</TD>
+<TD><INPUT id=flex_pricer_mode name=flex_pricer_mode> </TD></TR>
+<TR>
+<TD>Flex Pricer Page Type:</TD>
+<TD><INPUT id=flex_pricer_page_type name=flex_pricer_page_type> </TD></TR></TBODY></TABLE></FORM></CENTER></DIV>
+<SCRIPT type=text/javascript>
+// Variables and methods needed through out the page
+function Right(str, n){
+	if (n <= 0) {return "";}
+	else if (n > String(str).length) {return str;}
+	else {
+		var iLen = String(str).length;
+		return String(str).substring(iLen, iLen - n); 
+	}
+}
+function days_between(date1_ms, date2_ms) {
+	var ONE_DAY = 1000 * 60 * 60 * 24;
+	var difference_ms = Math.abs(date1_ms - date2_ms);
+	return Math.round(difference_ms/ONE_DAY);
+}
+function minutes_between(date1_ms, date2_ms) {
+	var ONE_MINUTE = 1000 * 60;
+	var difference_ms = Math.abs(date1_ms - date2_ms);
+	return Math.round(difference_ms/ONE_MINUTE);
+}
+
+if(!window.data_isInitialized) {
+rtowin="";//Trip type (OW,RT,MULTI)
+wt_flights=""; //Flight numbers
+wt_origin=""; //Origin
+wt_ddate=""; // Departure date
+wt_destination=""; //Destination
+wt_countryfrom=""; //Country from
+wt_countryto=""; //Country to
+wt_numcitypairs=""; //Number of itineraries
+wt_numsegments=""; //Number of segments
+wt_flighthrs=""; //Total flight time in hours
+wt_route=""; //Full list of segments
+wt_countries=""; //Full list of countries
+wt_cpair=""; //Full list of itineraries
+wt_apurchcat=""; //Advance purchase
+wt_services=""; // non air segments
+
+var dcode = new Array(); // departure codes
+var dctry = new Array(); // departure countries
+var acode = new Array(); // arrival codes
+var actry = new Array(); // arrival countries
+var ddate = new Array(); // departure dates
+var ddatems = new Array(); // departure dates in ms
+var adate = new Array(); // arrival dates
+var adatems = new Array(); // arrival dates in ms
+var fnumb = new Array(); // flight numbers
+var alcode = new Array(); // airline codes
+var segmentminutes = new Array(); // segment flight times, in minutes
+var ArVal = new Array();
+ArFcde = ["nbTrav","pnrCabin","officeId","currency","totalPrice","pnrNbr","pnrTicketingMethod","SITE","language","pnrGDS","pnrCreationDate","custom_templateName","initialOfficeId"];
+ArTnme = ["CMTL","CMTR"];
+
+// Variables initialization from custom dhtml
+for (i=0;i<ArFcde.length;i++) {
+	if(document.getElementById(ArFcde[i])){
+		ArVal[i] = document.getElementById(ArFcde[i]).value;
+	}
+	else ArVal[i] = "";
+}
+
+if (document.body.id){tnme = document.body.id.toUpperCase();}
+else {tnme = "NotBookingEngine";}
+
+// For CMTR we retrieve more details
+if (tnme == "CMTR") {
+	i=0;
+	j=0;
+	totalsegments=0;
+	totalflighttime=0;
+	while (document.getElementById("departureCode_" + i + "_" + j)) {
+		dcode[i] = new Array(); dctry[i] = new Array();
+		acode[i] = new Array(); actry[i] = new Array();
+		ddatems[i] = new Array(); ddate[i] = new Array(); adate[i] = new Array(); adatems[i] = new Array();
+		fnumb[i] = new Array(); alcode[i] = new Array(); segmentminutes[i] = new Array();
+		while (document.getElementById("departureCode_" + i + "_" + j)) {
+			depcode = "departureCode_" + i + "_" + j;
+			depcountry = "departureCountryCode_" + i + "_" + j;
+			arrcode = "arrivalCode_" + i + "_" + j;
+			arrcountry = "arrivalCountryCode_" + i + "_" + j;
+			depdate = "departureDate_" + i + "_" + j;
+			arrdate = "arrivalDate_" + i + "_" + j;
+			fnumber = "flightNumber_" + i + "_" + j;
+			airline = "airlineName_" + i + "_" + j;
+			airlinecode = "airlineCode_" + i + "_" + j;
+
+			dcode[i][j] = document.getElementById(depcode).value;
+			dctry[i][j] = document.getElementById(depcountry).value;
+			acode[i][j] = document.getElementById(arrcode).value;
+			actry[i][j] = document.getElementById(arrcountry).value;
+			ddate[i][j] = document.getElementById(depdate).value.slice(4,10) + " " + Right(document.getElementById(depdate).value, 4);
+			ddatems[i][j] = Date.parse(document.getElementById(depdate).value);
+			adate[i][j] = document.getElementById(arrdate).value.slice(4,10) + " " + Right(document.getElementById(arrdate).value, 4);
+			adatems[i][j] = Date.parse(document.getElementById(arrdate).value);
+			fnumb[i][j] = document.getElementById(fnumber).value;				
+			alcode[i][j] = document.getElementById(airlinecode).value;
+			
+			segmentminutes[i][j] = minutes_between(ddatems[i][j],adatems[i][j]);
+			totalflighttime = totalflighttime + segmentminutes[i][j];
+			wt_flights = wt_flights + (wt_flights != "" ? "_" : "") + alcode[i][j];
+			wt_route = wt_route + (wt_route != "" ? "_" : "") + dcode[i][j] + "-" + acode[i][j];
+			wt_countries = wt_countries + (wt_countries != "" ? "_" : "") + dctry[i][j] + "-" + actry[i][j];
+			
+			totalsegments++;
+			j++;
+		}
+		j=0;
+		i++;
+	}
+	citypairs = dcode.length;
+	if (citypairs > 0) {
+		for (i=0;i<citypairs;i++) {
+			wt_cpair = wt_cpair + (wt_cpair != "" ? "_" : "") + dcode[i][0] + "-" + acode[i][acode[i].length-1];
+		}
+		totalflighttime = Math.round(totalflighttime/60);
+		var curdate = new Date();
+		advancepurchase = days_between(curdate.getTime(), ddatems[0][0]);
+		wt_origin = (!dcode[0][0] ? "" : dcode[0][0]);
+		wt_destination = (!acode[0][acode[0].length-1] ? "" : acode[0][acode[0].length-1]);
+		wt_countryfrom = (!dctry[0][0] ? "" : dctry[0][0]);
+		wt_countryto = (!actry[0][actry[0].length-1] ? "" : actry[0][actry[0].length-1]);
+		wt_ddate = (!ddate[0][0] ? "" : ddate[0][0]);
+		wt_numcitypairs = (!citypairs ? "" : citypairs);
+		wt_numsegments = (!totalsegments ? "" : totalsegments);
+		wt_flighthrs = (!totalflighttime ? "" : totalflighttime);
+		wt_advpurch = (!advancepurchase ? "" : advancepurchase);
+		rtowin = "RT";
+		if (citypairs == 1) {rtowin = "OW";}
+		if (citypairs > 2) {rtowin = "MULTI";}	
+		for(i=0;i<=151;i=i+30){
+			j=i+30;
+			if (wt_advpurch > 0 && wt_advpurch <= 30) {wt_apurchcat = "30 days or less"; break;}
+			else if (wt_advpurch > i && wt_advpurch <= j) {wt_apurchcat = (i+1) + " to " + j + " days"; break;}
+		}
+		if (wt_apurchcat == "" && wt_advpurch > 180) wt_apurchcat = "more than 180 days";
+	}
+	wt_office = (!ArVal[2] ? "" : ArVal[2]);
+	wt_pax = (!ArVal[0] ? "" : ArVal[0]);
+	wt_currency = (!ArVal[3] ? "" : ArVal[3]);
+	if (document.getElementById("hasCar")) {
+		wt_services = "C";
+	}
+	if (document.getElementById("hasHotel")) {
+		wt_services = wt_services + (wt_services != "" ? "_" : "") + "H";
+	}
+	if (document.getElementById("hasTrain")) {
+		wt_services = wt_services + (wt_services != "" ? "_" : "") + "T";
+	}
+}
+data_isInitialized = true;
+}
+</SCRIPT>
+
+<SCRIPT type=text/javascript>
+function AmadeusAdServer(aas_pageid,aas_formatid,aas_target) {
+ request='https://mediasolutions.amadeus.net/1ASIHADV/ADVRAD/GetBannerContent.html?';
+ request += 'ptype='+aas_formatid;
+ 
+ if(document.getElementById("language").value == "GB"){
+	request += '&language=EN';
+	}
+ else{
+	request += '&language='+document.getElementById("language").value;
+	}
+ request += '&stype='+aas_pageid;
+ request += aas_target;
+ request += '&mode=JSCLKD&net=EXT&si=PRD';
+ document.write('<scr'+'ipt src="'+ request+ '"></scr'+'ipt>');
+}
+
+</SCRIPT>
+
+<DIV id=ads_cmtr_header>
+<SCRIPT type=text/javascript>
+aas_pageid=17;	// Page : checkmytrip/itinerary
+aas_formatid="W08";		// Format : Leaderboard 728x90
+var adatedep = new Date();
+adatedep.setTime(ddatems[0][0]);
+var adatedepmonth = adatedep.getMonth() + 1;
+ if(adatedepmonth < 10){
+	adatedepmonth = '0'+adatedepmonth;
+	}
+var adatedepday = adatedep.getDate();
+var adatedepyear = adatedep.getFullYear();
+
+aas_target='&board=' + wt_origin
+	+ '&off=' + wt_destination
+	+ '&provider=' + wt_flights.split('_')[0] + '0'
+	+ '&office=' + ArVal[12]
+	+ '&date=' + adatedepday + adatedepmonth + adatedepyear
+	+ '&fn=' + fnumb[0][0]; // Targeting
+AmadeusAdServer(aas_pageid,aas_formatid,aas_target);
+</SCRIPT>
+
+<SCRIPT src="https://mediasolutions.amadeus.net/1ASIHADV/ADVRAD/GetBannerContent.html?ptype=W08&amp;language=EN&amp;stype=17&amp;board=FRA&amp;off=LIS&amp;provider=TP0&amp;office=FLNB2212M&amp;date=1102011&amp;fn=575&amp;mode=JSCLKD&amp;net=EXT&amp;si=PRD"></SCRIPT>
+<A href="https://mediasolutions.amadeus.net/1ASIHADV/ADVRAD/GetBannerLink.html?msg=890339&amp;si=PRD&amp;office=FLNB2212M&amp;provider=TP0&amp;language=EN&amp;mode=JSCLKD&amp;ptype=W08&amp;stype=17&amp;board=FRA&amp;off=LIS&amp;date=1102011&amp;fn=575&amp;adlink=http://nextgen.checkmytrip.com" target=_blank><IMG border=0 src="http://content.amadeus.com/B2BRichMedia/1117182718.gif"></A> <NOSCRIPT></NOSCRIPT></DIV>
+<SCRIPT language=javascript type=text/javascript>
+<!--
+  var waitLanguage = 'GB';
+  
+  if (waitLanguage == 'GB') {
+    waitLanguage = 'en';
+  }
+  WDSWaitingImage.setLanguage("languages/" + waitLanguage); 
+  WDSWaitingImage.setPrivateLabel(null);
+  WDSWaitingImage.setProgressImg("progress.gif")
+  WDSWaitingImage.preload("wait");
+  -->
+</SCRIPT>
+
+<CENTER>
+<DIV style="DISPLAY: none; align: center" id=WDSWaitingImageDivID>
+<DIV id=divWait>
+<P id=logo><IMG id=WDSWaitingImageImgID name=WDSWaitingImageName></P>
+<P id=title>We are processing your request, please wait...</P>
+<P id=indicator><IMG id=WDSProgressImageImgID alt="We are processing your request, please wait..."></P>
+<P id=info></P></DIV></DIV></CENTER>
+<DIV id=container>
+<TABLE class=layoutTable>
+<TBODY>
+<TR>
+<TD class=layoutLeft rowSpan=3>
+<DIV id=cmtLogout><A href="/plnext/XCMTXITN/CleanUpSessionPui.action?SITE=XCMTXITN&amp;LANGUAGE=GB">Logout</A> </DIV>
+<DIV id=cmtMenu>
+<DL id=cmtNav>
+<DT>trip tools 
+<DD><A title="Destination Guides" href="http://www.amadeus.net/home/destinations/en/index.htm" target=_blank>Destination Guides</A> 
+<DD><A title="Airport Guides" href="http://www.amadeus.net/home/airports/en/index.htm" target=_blank>Airport Guides</A> 
+<DD><A title="Subway Maps" href="http://www.amadeus.net/home/subwaymaps/en/index.htm" target=_blank>Subway Maps</A> 
+<DD><A title=Currency href="http://www.amadeus.net/home/Currency/currency_en.htm" target=_blank>Currency</A> 
+<DD><A title="World Clock" href="http://www.amadeus.net/home/worldtime/en/wt_en.htm" target=_blank>World Clock</A> 
+<DD><A title="Map Search" href="http://www.amadeus.net/home/multimap/en/index.html" target=_blank>Map Search</A> 
+<DD><A title="World Dialling Codes" href="http://www.amadeus.net/home/dialing_codes/en/index.htm" target=_blank>World Dialling Codes</A> 
+<DT><A title="about Amadeus" href="http://www.amadeus.com" target=_blank>about Amadeus</A> </DT></DL></DIV>
+<DIV id=massivegoodad class=ad>
+<SCRIPT type=text/javascript src="https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></SCRIPT>
+
+<SCRIPT type=text/javascript>
+                var flashvars = {
+                        LANGUAGE: "GB",
+                        SITE: "MFMFMFMF",					
+                        PROVIDER_GDS_ID: "1A",
+                        PROVIDER_OFFICE_ID: document.getElementById('officeId').value,
+                        PRODUCT_NAME: "CMT_ITI",
+                        PRODUCT_VERSION: "14.0",
+                        LAYOUT_TYPE: "3",
+                        DONOR_FIRST_NAME: document.getElementById('primaryTravellerFirstName').value,
+                        DONOR_LAST_NAME: document.getElementById('primaryTravellerLastName').value
+                };
+                var params = {};
+                var attributes = {};
+
+                swfobject.embedSWF("https://www.checkmytrip.com/checkmytrip/MG_160-120_GB.swf", "massiveGoodSwf", "160", "120", "9.0.0","https://www.checkmytrip.com/checkmytrip/expressInstall.swf", flashvars, params, attributes);          
+
+        </SCRIPT>
+
+<DIV id=massiveGoodSwf></DIV></DIV>
+<SCRIPT type=text/javascript>
+function MCMTTeaser () {
+	this.availableImages = ["BR","DE","ES","FR","GB","IT"];
+}
+MCMTTeaser.prototype = {
+	create: function() {
+		var lang = document.getElementById("language").value;
+		var imgLang = "GB";
+		for (var i = 0; i < this.availableImages.length; i++) {
+			if (this.availableImages[i] === lang) {
+				imgLang = lang;
+			}
+		}
+		var html = "<img src='./img/client/MCMT_small_" + imgLang + ".gif' />";
+		document.getElementById("cmtMCMT").innerHTML=html;
+	}
+}
+</SCRIPT>
+
+<DIV id=cmtMCMT><IMG src="https://www.checkmytrip.com/plnext/XCMTXITN/201103291323/static/img/client/MCMT_small_GB.gif"></DIV>
+<SCRIPT type=text/javascript>
+var mcmt = new MCMTTeaser();
+mcmt.create();
+</SCRIPT>
+</TD>
+<TD class=layoutTop>
+<DIV id=cmtHeader>
+<H1>&nbsp;</H1>
+<H3>&nbsp;</H3>
+<H5>&nbsp;</H5></DIV></TD>
+<TD class=layoutRight rowSpan=3>
+<DIV id=ads_cmtr_right>
+<SCRIPT type=text/javascript>
+aas_pageid=17;	// Page : checkmytrip/itinerary
+aas_formatid="W19";		// Format : Wide_Skyscraper_IAB 160x600
+var adatedep = new Date();
+adatedep.setTime(ddatems[0][0]);
+var adatedepmonth = adatedep.getMonth() + 1;
+ if(adatedepmonth < 10){
+	adatedepmonth = '0'+adatedepmonth;
+	}
+var adatedepday = adatedep.getDate();
+var adatedepyear = adatedep.getFullYear();
+
+aas_target='&board=' + wt_origin
+	+ '&off=' + wt_destination
+	+ '&provider=' + wt_flights.split('_')[0] + '0'
+	+ '&office=' + ArVal[12]
+	+ '&date=' + adatedepday + adatedepmonth + adatedepyear
+	+ '&fn=' + fnumb[0][0]; // Targeting
+AmadeusAdServer(aas_pageid,aas_formatid,aas_target);
+</SCRIPT>
+
+<SCRIPT src="https://mediasolutions.amadeus.net/1ASIHADV/ADVRAD/GetBannerContent.html?ptype=W19&amp;language=EN&amp;stype=17&amp;board=FRA&amp;off=LIS&amp;provider=TP0&amp;office=FLNB2212M&amp;date=1102011&amp;fn=575&amp;mode=JSCLKD&amp;net=EXT&amp;si=PRD"></SCRIPT>
+<NOSCRIPT></NOSCRIPT></DIV></TD></TR>
+<TR>
+<TD class=layoutBody>
+<FORM id=backConfViewTypeform class=transparentForm name=backConfViewTypeform><INPUT id=backConfViewType name=backConfViewType type=hidden> </FORM>
+<DIV class=container>
+<TABLE class=tableHeader cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD id=th_td1 class=ImgCase><SPAN id=id_tripResTitle>your trip reservation </SPAN></TD></TR></TBODY></TABLE>
+<DIV class=divtableTripSummary>
+<SCRIPT language=javascript type=text/javascript>
+  // init messages
+  WDSMessage.setMessage("WDSError.HeaderMessage", "HeaderMessage");
+  WDSMessage.setMessage("WDSError.Title.E", "The following error(s) occured");
+  WDSMessage.setMessage("WDSError.Title.W", "The following warning(s) occured");
+  WDSMessage.setMessage("WDSError.Title.I", "The following warning(s) occured");
+  WDSMessage.setMessage("WDSError.Title.F", "The following fatal error(s) occured");
+   
+  //init local error message list
+  
+    
+    function LocalErrorInit () {
+      
+    }
+ 
+</SCRIPT>
+
+<DIV style="DISPLAY: none" id=WDSError>
+<TABLE class=tableError cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD class=textBold vAlign=top>
+<DIV class=ImgError>&nbsp;</DIV></TD>
+<TD class=textNormal width="100%">
+<DIV id=WDSErrorContainer></DIV></TD></TR></TBODY></TABLE></DIV>
+<FORM class=transparentForm method=post name=emailToAFriend action=/plnext/XCMTXITN/EmailFromConfPopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163 target=popupEMail><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=JSP_NAME_KEY value=SITE_JSP_STATE_RETRIEVED type=hidden> <INPUT name=DISABLE_START_OVER value=TRUE type=hidden> <INPUT name=TAB_TO_MAIL type=hidden> <INPUT name=TICKET_TO_MAIL type=hidden> </FORM>
+<DIV id=po_top class=page_options>
+<UL><!-- Print link --><!-- PTR03068518 - www - AeRE121 - CONF Icon not well displayed under FF2 -->
+<LI class=po_1><A class=po_print href="javascript:CONF.print();">print page</A> <!-- Download to Calendar link --><!-- PTR03068518 - www - AeRE121 - CONF Icon not well displayed under FF2 --></LI>
+<LI class=po_2><A class=po_download href="javascript:redirectToAnExternalPopUp('/plnext/XCMTXITN/CalendarDownload.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB',500,500);">download to calendar</A> <!-- EMail to a friend link --><!-- PTR03068518 - www - AeRE121 - CONF Icon not well displayed under FF2 --></LI>
+<LI class=po_3><A class=po_email href="javascript:emailToAFriend();">e-mail to a friend</A> <!-- Start Over link --><!-- PTR03068518 - www - AeRE121 - CONF Icon not well displayed under FF2 --><!-- Cancel Reservation link --><!-- PTR03068518 - www - AeRE121 - CONF Icon not well displayed under FF2 --></LI></UL>
+<DIV class=clear></DIV></DIV>
+<TABLE class=tableTripSummary cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD class=textBoldlarge>Booking reservation number: <SPAN class=textColor>X792MS</SPAN> </TD>
+<TD vAlign=top rowSpan=12></TD></TR>
+<TR>
+<TD class=textBoldlarge></TD></TR>
+<TR>
+<TD class=space></TD></TR>
+<TR>
+<TD>&nbsp; </TD></TR>
+<TR>
+<TD class=space></TD></TR>
+<TR>
+<TD>• We recommend you make a note of the booking reservation number or <A href="javascript:window.print()">print</A> this page.</TD></TR>
+<TR>
+<TD class=space></TD></TR>
+<TR>
+<TD class=space></TD></TR>
+<TR>
+<TD>&nbsp;</TD></TR></TBODY></TABLE></DIV><!-- set all common variables --><!-- etv i18n separator -->
+<DIV id=tablePassengerTitle>
+<TABLE class=tableSubHeader cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD><SPAN class=ImgPassenger>&nbsp;</SPAN><A id=passenger name=passenger></A>traveller information</TD></TR></TBODY></TABLE></DIV>
+<DIV id=divTablePassenger class=divTablePassenger><!--Compact Traveller information-->
+<TABLE id=pax2 class=tablePassenger cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD width="75%">&nbsp;</TD>
+<TD width="25%">&nbsp;</TD></TR>
+<TR>
+<TD><SPAN class="textBold fontSize">Mr Manfred Siekmann </SPAN></TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD class=space></TD>
+<TD class=space></TD></TR>
+<TR>
+<TD></TD>
+<TD class=modifyPaxDetails></TD></TR>
+<TR>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR></TBODY></TABLE><!--Detailed Traveller information-->
+<TABLE style="DISPLAY: none" id=pax1 class=tablePassenger cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD width="75%" colSpan=2>&nbsp;</TD>
+<TD width="25%">&nbsp;</TD>
+<TR>
+<TD colSpan=2><SPAN class="textBold fontSize">Mr Manfred Siekmann </SPAN></TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD class=space colSpan=3></TD></TR>
+<TR>
+<TD colSpan=3>
+<TABLE class=tablePassengerIndent border=0 cellSpacing=0 cellPadding=0>
+<TBODY></TBODY></TABLE></TD></TR><!--/table-->
+<TR>
+<TD class=space colSpan=3></TD></TR>
+<TR>
+<TD colSpan=2></TD>
+<TD class=modifyPaxDetails></TD></TR>
+<TR>
+<TD colSpan=3>&nbsp;</TD></TR></TBODY></TABLE></DIV>
+<DIV id=selectionRecap>
+<TABLE class=tableSubHeader cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD><SPAN class=ImgPlane>&nbsp;</SPAN><A id=flight name=flight></A> your flight selection </TD></TR></TBODY></TABLE></DIV>
+<DIV id=sh_selectionRecap class=sectionHolder>
+<TABLE class=tableConfText cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD class=textBold>Airline confirmation number(s): <SPAN class=textColor>TAP Portugal X792MS GOL VRG Linhas Aereas FC8MYD GOL VRG Linhas Aereas JH9W8B</SPAN> </TD></TR></TBODY></TABLE></DIV>
+<SCRIPT language=JavaScript type=text/JavaScript><!--
+  		
+      var fareFamilyDescriptionPopUp = new FarefamilyDescriptionPopUp('ltr','en','iso-8859-1','https:\/\/www.checkmytrip.com\/plnext\/XCMTXITN\/201103291323\/static\/','checkmytrip.com - fare type information', 'fare type information','close',480,313,'<link rel=\"stylesheet\" type=\"text\/css\" href=\"https:\/\/www.checkmytrip.com\/plnext\/default\/WPN_AeRE_v14.1_117O_180411\/static\/css_v2\/main.css\" \/>','<link rel=\"stylesheet\" type=\"text\/css\" href=\".\/css\/custom.css\" \/>');
+  		//-->
+  	</SCRIPT>
+
+<DIV id=sh_fltItinerary class=divtableFlightConf>
+<TABLE id=tabFgtReview_0 class=tableFlightConf cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TH colSpan=3>Frankfurt to Lisbon </TH></TR>
+<TR>
+<TD class=space></TD>
+<TD class=space></TD>
+<TD class=space></TD></TR>
+<TR>
+<TD class="textBold flight">Flight 1</TD>
+<TD class=textBold width="83%" colSpan=2>Saturday, October 01, 2011 </TD></TR>
+<TR>
+<TD class=textColorBold vAlign=top>&nbsp;confirmed</TD>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=3>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=textBold width="15%"><SPAN class=nowrap>Departure:</SPAN></TD>
+<TD class=nowrap>13:30</TD>
+<TD width="90%">Frankfurt, Germany - 
+<FORM id=AirportGuidesFRA class=transparentForm method=post name=AirportGuidesFRA action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRPORT_CODE value=FRA type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesFRA'),'popupAirportGuides',610,620)">Frankfurt International </A></FORM>, terminal 1 </TD></TR>
+<TR>
+<TD class=textBold><SPAN class=nowrap>Arrival:</SPAN></TD>
+<TD class=nowrap>15:30 </TD>
+<TD>Lisbon, Portugal - 
+<FORM id=AirportGuidesLIS class=transparentForm method=post name=AirportGuidesLIS action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRPORT_CODE value=LIS type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesLIS'),'popupAirportGuides',610,620)">Airport </A></FORM>, terminal 1 </TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD class=space colSpan=4></TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="15%">Airline: </TD>
+<TD id=segAirline_0_0 width="35%">TAP Portugal&nbsp;TP575 </TD>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" vAlign=top rowSpan=3 width="50%" colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=textBoldSmallFlight width="29%">Duration:</TD>
+<TD id=segDuration_0_0>3:00 </TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="29%">Aircraft:</TD>
+<TD id=segAircraft_0_0>
+<FORM id=AirCraftInfo319 class=transparentForm method=post name=AirCraftInfo319 action=/plnext/XCMTXITN/AirCraftInfo.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirCraftInfo><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRCRAFT_CODE value=319 type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirCraftInfo319'),'popupAirCraftInfo',610,600)">Airbus Industrie A319</A> </FORM></TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="29%" noWrap>Last check in:</TD>
+<TD id=segChkIn_0_0>0:45 before flight</TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD></TD>
+<TD id=segOpBy_0_0><SPAN class=textSmaller></SPAN></TD></TR>
+<TR id=faretype>
+<TD class=textBoldSmallFlight noWrap>Fare type:</TD>
+<TD id=segFareType_0_0>Economy Restricted </TD></TR>
+<TR>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=4>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD id=segMeal_0_0 width="66%"><SPAN class=ImgPlate>&nbsp;</SPAN>MEAL (NON SPECIFIC) </TD>
+<TD id=segFlightInfo_0_0 width="33%"><SPAN class=ImgFlightStatus>&nbsp;</SPAN> <A class=textSmaller href="javascript:redirectToAnExternalPopUp('/plnext/XCMTXITN/FlightStatusPopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?PAGE_TICKET=&amp;B_LOCATION=FRA&amp;E_LOCATION=LIS&amp;B_DATE=201110011330&amp;AIRLINE_CODE=TP&amp;FLIGHT_NUMBER=575&amp;SITE=XCMTXITN&amp;LANGUAGE=GB',550,450)">current flight status</A> </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD></TD>
+<TD class=space colSpan=2>&nbsp;</TD></TR></TBODY></TABLE>
+<TABLE style="BORDER-TOP-STYLE: none" id=tabFgtReview_1 class=tableFlightConf cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TH colSpan=3>Lisbon to Brasilia </TH></TR>
+<TR>
+<TD class=space></TD>
+<TD class=space></TD>
+<TD class=space></TD></TR>
+<TR>
+<TD class="textBold flight">Flight 1</TD>
+<TD class=textBold width="83%" colSpan=2>Sunday, October 02, 2011 </TD></TR>
+<TR>
+<TD class=textColorBold vAlign=top>&nbsp;confirmed</TD>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=3>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=textBold width="15%"><SPAN class=nowrap>Departure:</SPAN></TD>
+<TD class=nowrap>09:55</TD>
+<TD width="90%">Lisbon, Portugal - 
+<FORM id=AirportGuidesLIS class=transparentForm method=post name=AirportGuidesLIS action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRPORT_CODE value=LIS type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesLIS'),'popupAirportGuides',610,620)">Airport </A></FORM>, terminal 1 </TD></TR>
+<TR>
+<TD class=textBold><SPAN class=nowrap>Arrival:</SPAN></TD>
+<TD class=nowrap>15:35 </TD>
+<TD>Brasilia, Brazil - 
+<FORM id=AirportGuidesBSB class=transparentForm method=post name=AirportGuidesBSB action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRPORT_CODE value=BSB type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesBSB'),'popupAirportGuides',610,620)">Brasilia International </A></FORM></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD class=space colSpan=4></TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="15%">Airline: </TD>
+<TD id=segAirline_1_0 width="35%">TAP Portugal&nbsp;TP4175 </TD>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" vAlign=top rowSpan=3 width="50%" colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=textBoldSmallFlight width="29%">Duration:</TD>
+<TD id=segDuration_1_0>9:40 </TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="29%">Aircraft:</TD>
+<TD id=segAircraft_1_0>
+<FORM id=AirCraftInfo332 class=transparentForm method=post name=AirCraftInfo332 action=/plnext/XCMTXITN/AirCraftInfo.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirCraftInfo><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRCRAFT_CODE value=332 type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirCraftInfo332'),'popupAirCraftInfo',610,600)">Airbus Industrie A330-200</A> </FORM></TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="29%" noWrap>Last check in:</TD>
+<TD id=segChkIn_1_0>information not available</TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD></TD>
+<TD id=segOpBy_1_0><SPAN class=textSmaller></SPAN></TD></TR>
+<TR id=faretype>
+<TD class=textBoldSmallFlight noWrap>Fare type:</TD>
+<TD id=segFareType_1_0>Economy Restricted </TD></TR>
+<TR>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=4>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD id=segMeal_1_0 width="66%"><SPAN class=ImgPlate>&nbsp;</SPAN>LUNCH, SNACK OR BRUNCH </TD>
+<TD id=segFlightInfo_1_0 width="33%"><SPAN class=ImgFlightStatus>&nbsp;</SPAN> <A class=textSmaller href="javascript:redirectToAnExternalPopUp('/plnext/XCMTXITN/FlightStatusPopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?PAGE_TICKET=&amp;B_LOCATION=LIS&amp;E_LOCATION=BSB&amp;B_DATE=201110020955&amp;AIRLINE_CODE=TP&amp;FLIGHT_NUMBER=4175&amp;SITE=XCMTXITN&amp;LANGUAGE=GB',550,450)">current flight status</A> </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD></TD>
+<TD class=space colSpan=2>&nbsp;</TD></TR></TBODY></TABLE>
+<TABLE style="BORDER-TOP-STYLE: none" id=tabFgtReview_2 class=tableFlightConf cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TH colSpan=3>Brasilia to Cuiaba </TH></TR>
+<TR>
+<TD class=space></TD>
+<TD class=space></TD>
+<TD class=space></TD></TR>
+<TR>
+<TD class="textBold flight">Flight 1</TD>
+<TD class=textBold width="83%" colSpan=2>Monday, October 03, 2011 </TD></TR>
+<TR>
+<TD class=textColorBold vAlign=top>&nbsp;confirmed</TD>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=3>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=textBold width="15%"><SPAN class=nowrap>Departure:</SPAN></TD>
+<TD class=nowrap>09:36</TD>
+<TD width="90%">Brasilia, Brazil - 
+<FORM id=AirportGuidesBSB class=transparentForm method=post name=AirportGuidesBSB action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRPORT_CODE value=BSB type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesBSB'),'popupAirportGuides',610,620)">Brasilia International </A></FORM></TD></TR>
+<TR>
+<TD class=textBold><SPAN class=nowrap>Arrival:</SPAN></TD>
+<TD class=nowrap>10:30 </TD>
+<TD>Cuiaba, Brazil - 
+<FORM id=AirportGuidesCGB class=transparentForm method=post name=AirportGuidesCGB action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRPORT_CODE value=CGB type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesCGB'),'popupAirportGuides',610,620)">M. Rondon </A></FORM></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD class=space colSpan=4></TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="15%">Airline: </TD>
+<TD id=segAirline_2_0 width="35%">GOL VRG Linhas Aereas&nbsp;G31636 </TD>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" vAlign=top rowSpan=3 width="50%" colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=textBoldSmallFlight width="29%">Duration:</TD>
+<TD id=segDuration_2_0>1:54 </TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="29%">Aircraft:</TD>
+<TD id=segAircraft_2_0>
+<FORM id=AirCraftInfo738 class=transparentForm method=post name=AirCraftInfo738 action=/plnext/XCMTXITN/AirCraftInfo.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirCraftInfo><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRCRAFT_CODE value=738 type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirCraftInfo738'),'popupAirCraftInfo',610,600)">Boeing 737-800</A> </FORM></TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="29%" noWrap>Last check in:</TD>
+<TD id=segChkIn_2_0>information not available</TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD></TD>
+<TD id=segOpBy_2_0><SPAN class=textSmaller></SPAN></TD></TR>
+<TR id=faretype>
+<TD class=textBoldSmallFlight noWrap>Fare type:</TD>
+<TD id=segFareType_2_0>Economy Restricted </TD></TR>
+<TR>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=4>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD id=segMeal_2_0 width="66%"><SPAN class=ImgPlate>&nbsp;</SPAN>information not available </TD>
+<TD id=segFlightInfo_2_0 width="33%"><SPAN class=ImgFlightStatus>&nbsp;</SPAN> <A class=textSmaller href="javascript:redirectToAnExternalPopUp('/plnext/XCMTXITN/FlightStatusPopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?PAGE_TICKET=&amp;B_LOCATION=BSB&amp;E_LOCATION=CGB&amp;B_DATE=201110030936&amp;AIRLINE_CODE=G3&amp;FLIGHT_NUMBER=1636&amp;SITE=XCMTXITN&amp;LANGUAGE=GB',550,450)">current flight status</A> </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD></TD>
+<TD class=space colSpan=2>&nbsp;</TD></TR></TBODY></TABLE>
+<TABLE style="BORDER-TOP-STYLE: none" id=tabFgtReview_3 class=tableFlightConf cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TH colSpan=3>Cuiaba to Iguassu Falls </TH></TR>
+<TR>
+<TD class=space></TD>
+<TD class=space></TD>
+<TD class=space></TD></TR>
+<TR>
+<TD class="textBold flight">Flight 1</TD>
+<TD class=textBold width="83%" colSpan=2>Friday, October 07, 2011 </TD></TR>
+<TR>
+<TD class=textColorBold vAlign=top>&nbsp;confirmed</TD>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=3>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=textBold width="15%"><SPAN class=nowrap>Departure:</SPAN></TD>
+<TD class=nowrap>18:20</TD>
+<TD width="90%">Cuiaba, Brazil - 
+<FORM id=AirportGuidesCGB class=transparentForm method=post name=AirportGuidesCGB action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRPORT_CODE value=CGB type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesCGB'),'popupAirportGuides',610,620)">M. Rondon </A></FORM></TD></TR>
+<TR>
+<TD class=textBold><SPAN class=nowrap>Arrival:</SPAN></TD>
+<TD class=nowrap>20:54 </TD>
+<TD>Brasilia, Brazil - 
+<FORM id=AirportGuidesBSB class=transparentForm method=post name=AirportGuidesBSB action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRPORT_CODE value=BSB type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesBSB'),'popupAirportGuides',610,620)">Brasilia International </A></FORM></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD class=space colSpan=4></TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="15%">Airline: </TD>
+<TD id=segAirline_3_0 width="35%">GOL VRG Linhas Aereas&nbsp;G31637 </TD>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" vAlign=top rowSpan=3 width="50%" colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=textBoldSmallFlight width="29%">Duration:</TD>
+<TD id=segDuration_3_0>1:34 </TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="29%">Aircraft:</TD>
+<TD id=segAircraft_3_0>
+<FORM id=AirCraftInfo738 class=transparentForm method=post name=AirCraftInfo738 action=/plnext/XCMTXITN/AirCraftInfo.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirCraftInfo><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRCRAFT_CODE value=738 type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirCraftInfo738'),'popupAirCraftInfo',610,600)">Boeing 737-800</A> </FORM></TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="29%" noWrap>Last check in:</TD>
+<TD id=segChkIn_3_0>information not available</TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD></TD>
+<TD id=segOpBy_3_0><SPAN class=textSmaller></SPAN></TD></TR>
+<TR id=faretype>
+<TD class=textBoldSmallFlight noWrap>Fare type:</TD>
+<TD id=segFareType_3_0>Economy Restricted </TD></TR>
+<TR>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=4>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD id=segMeal_3_0 width="66%"><SPAN class=ImgPlate>&nbsp;</SPAN>information not available </TD>
+<TD id=segFlightInfo_3_0 width="33%"><SPAN class=ImgFlightStatus>&nbsp;</SPAN> <A class=textSmaller href="javascript:redirectToAnExternalPopUp('/plnext/XCMTXITN/FlightStatusPopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?PAGE_TICKET=&amp;B_LOCATION=CGB&amp;E_LOCATION=BSB&amp;B_DATE=201110071820&amp;AIRLINE_CODE=G3&amp;FLIGHT_NUMBER=1637&amp;SITE=XCMTXITN&amp;LANGUAGE=GB',550,450)">current flight status</A> </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD class=space colSpan=3></TD></TR>
+<TR>
+<TD class=border colSpan=3><SPAN class=ImgPlane2>&nbsp;</SPAN> 
+<DIV class="textChangeAirport textChangeAirportTextBold">Change of plane required. Time between flights : 0:41. </DIV></TD></TR>
+<TR>
+<TD></TD>
+<TD class=space colSpan=2>&nbsp;</TD></TR>
+<TR>
+<TD class="textBold flight">Flight 2</TD>
+<TD class=textBold width="83%" colSpan=2>Friday, October 07, 2011 </TD></TR>
+<TR>
+<TD class=textColorBold vAlign=top>&nbsp;confirmed</TD>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=3>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=textBold width="15%"><SPAN class=nowrap>Departure:</SPAN></TD>
+<TD class=nowrap>21:35</TD>
+<TD width="90%">Brasilia, Brazil - 
+<FORM id=AirportGuidesBSB class=transparentForm method=post name=AirportGuidesBSB action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRPORT_CODE value=BSB type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesBSB'),'popupAirportGuides',610,620)">Brasilia International </A></FORM></TD></TR>
+<TR>
+<TD class=textBold><SPAN class=nowrap>Arrival:</SPAN></TD>
+<TD class=nowrap>01:10 <SPAN class=textSmaller>+1 day(s) <SPAN class=ImgHelp9 onmouseover="javascript:NbDayBetweenDepAndArrDates.doTooltip(event,'You will be arriving 1 day(s) later')" onmouseout=javascript:NbDayBetweenDepAndArrDates.hideTip()>&nbsp;</SPAN> </SPAN></TD>
+<TD>Iguassu Falls, Brazil - 
+<FORM id=AirportGuidesIGU class=transparentForm method=post name=AirportGuidesIGU action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRPORT_CODE value=IGU type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesIGU'),'popupAirportGuides',610,620)">Cataratas </A></FORM><SPAN class=tech>Note: includes 1 technical stop(s)</SPAN> </TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD class=space colSpan=4></TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="15%">Airline: </TD>
+<TD id=segAirline_3_1 width="35%">GOL VRG Linhas Aereas&nbsp;G31631 </TD>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" vAlign=top rowSpan=3 width="50%" colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=textBoldSmallFlight width="29%">Duration:</TD>
+<TD id=segDuration_3_1>3:35 </TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="29%">Aircraft:</TD>
+<TD id=segAircraft_3_1>
+<FORM id=AirCraftInfo738 class=transparentForm method=post name=AirCraftInfo738 action=/plnext/XCMTXITN/AirCraftInfo.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirCraftInfo><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRCRAFT_CODE value=738 type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirCraftInfo738'),'popupAirCraftInfo',610,600)">Boeing 737-800</A> </FORM></TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="29%" noWrap>Last check in:</TD>
+<TD id=segChkIn_3_1>information not available</TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD></TD>
+<TD id=segOpBy_3_1><SPAN class=textSmaller></SPAN></TD></TR>
+<TR id=faretype>
+<TD class=textBoldSmallFlight noWrap>Fare type:</TD>
+<TD id=segFareType_3_1>Economy Restricted </TD></TR>
+<TR>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=4>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD id=segMeal_3_1 width="66%"><SPAN class=ImgPlate>&nbsp;</SPAN>information not available </TD>
+<TD id=segFlightInfo_3_1 width="33%"><SPAN class=ImgFlightStatus>&nbsp;</SPAN> <A class=textSmaller href="javascript:redirectToAnExternalPopUp('/plnext/XCMTXITN/FlightStatusPopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?PAGE_TICKET=&amp;B_LOCATION=BSB&amp;E_LOCATION=IGU&amp;B_DATE=201110072135&amp;AIRLINE_CODE=G3&amp;FLIGHT_NUMBER=1631&amp;SITE=XCMTXITN&amp;LANGUAGE=GB',550,450)">current flight status</A> </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD></TD>
+<TD class=space colSpan=2>&nbsp;</TD></TR></TBODY></TABLE>
+<TABLE style="BORDER-TOP-STYLE: none" id=tabFgtReview_4 class=tableFlightConf cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TH colSpan=3>Iguassu Falls to Curitiba </TH></TR>
+<TR>
+<TD class=space></TD>
+<TD class=space></TD>
+<TD class=space></TD></TR>
+<TR>
+<TD class="textBold flight">Flight 1</TD>
+<TD class=textBold width="83%" colSpan=2>Sunday, October 09, 2011 </TD></TR>
+<TR>
+<TD class=textColorBold vAlign=top>&nbsp;confirmed</TD>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=3>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=textBold width="15%"><SPAN class=nowrap>Departure:</SPAN></TD>
+<TD class=nowrap>14:00</TD>
+<TD width="90%">Iguassu Falls, Brazil - 
+<FORM id=AirportGuidesIGU class=transparentForm method=post name=AirportGuidesIGU action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRPORT_CODE value=IGU type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesIGU'),'popupAirportGuides',610,620)">Cataratas </A></FORM></TD></TR>
+<TR>
+<TD class=textBold><SPAN class=nowrap>Arrival:</SPAN></TD>
+<TD class=nowrap>14:55 </TD>
+<TD>Curitiba, Brazil - 
+<FORM id=AirportGuidesCWB class=transparentForm method=post name=AirportGuidesCWB action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRPORT_CODE value=CWB type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesCWB'),'popupAirportGuides',610,620)">Afonso Pena </A></FORM></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD class=space colSpan=4></TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="15%">Airline: </TD>
+<TD id=segAirline_4_0 width="35%">GOL VRG Linhas Aereas&nbsp;G31851 </TD>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" vAlign=top rowSpan=3 width="50%" colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=textBoldSmallFlight width="29%">Duration:</TD>
+<TD id=segDuration_4_0>0:55 </TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="29%">Aircraft:</TD>
+<TD id=segAircraft_4_0>
+<FORM id=AirCraftInfo738 class=transparentForm method=post name=AirCraftInfo738 action=/plnext/XCMTXITN/AirCraftInfo.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirCraftInfo><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRCRAFT_CODE value=738 type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirCraftInfo738'),'popupAirCraftInfo',610,600)">Boeing 737-800</A> </FORM></TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="29%" noWrap>Last check in:</TD>
+<TD id=segChkIn_4_0>information not available</TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD></TD>
+<TD id=segOpBy_4_0><SPAN class=textSmaller></SPAN></TD></TR>
+<TR id=faretype>
+<TD class=textBoldSmallFlight noWrap>Fare type:</TD>
+<TD id=segFareType_4_0>Economy Restricted </TD></TR>
+<TR>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=4>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD id=segMeal_4_0 width="66%"><SPAN class=ImgPlate>&nbsp;</SPAN>information not available </TD>
+<TD id=segFlightInfo_4_0 width="33%"><SPAN class=ImgFlightStatus>&nbsp;</SPAN> <A class=textSmaller href="javascript:redirectToAnExternalPopUp('/plnext/XCMTXITN/FlightStatusPopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?PAGE_TICKET=&amp;B_LOCATION=IGU&amp;E_LOCATION=CWB&amp;B_DATE=201110091400&amp;AIRLINE_CODE=G3&amp;FLIGHT_NUMBER=1851&amp;SITE=XCMTXITN&amp;LANGUAGE=GB',550,450)">current flight status</A> </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD></TD>
+<TD class=space colSpan=2>&nbsp;</TD></TR></TBODY></TABLE>
+<TABLE style="BORDER-TOP-STYLE: none" id=tabFgtReview_5 class=tableFlightConf cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TH colSpan=3>Rio De Janeiro to Frankfurt </TH></TR>
+<TR>
+<TD class=space></TD>
+<TD class=space></TD>
+<TD class=space></TD></TR>
+<TR>
+<TD class="textBold flight">Flight 1</TD>
+<TD class=textBold width="83%" colSpan=2>Sunday, October 16, 2011 </TD></TR>
+<TR>
+<TD class=textColorBold vAlign=top>&nbsp;confirmed</TD>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=3>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=textBold width="15%"><SPAN class=nowrap>Departure:</SPAN></TD>
+<TD class=nowrap>18:20</TD>
+<TD width="90%">Rio De Janeiro, Brazil - 
+<FORM id=AirportGuidesGIG class=transparentForm method=post name=AirportGuidesGIG action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRPORT_CODE value=GIG type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesGIG'),'popupAirportGuides',610,620)">Rio De Janeiro International </A></FORM>, terminal 2 </TD></TR>
+<TR>
+<TD class=textBold><SPAN class=nowrap>Arrival:</SPAN></TD>
+<TD class=nowrap>07:00 <SPAN class=textSmaller>+1 day(s) <SPAN class=ImgHelp9 onmouseover="javascript:NbDayBetweenDepAndArrDates.doTooltip(event,'You will be arriving 1 day(s) later')" onmouseout=javascript:NbDayBetweenDepAndArrDates.hideTip()>&nbsp;</SPAN> </SPAN></TD>
+<TD>Lisbon, Portugal - 
+<FORM id=AirportGuidesLIS class=transparentForm method=post name=AirportGuidesLIS action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRPORT_CODE value=LIS type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesLIS'),'popupAirportGuides',610,620)">Airport </A></FORM>, terminal 1 </TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD class=space colSpan=4></TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="15%">Airline: </TD>
+<TD id=segAirline_5_0 width="35%">TAP Portugal&nbsp;TP178 </TD>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" vAlign=top rowSpan=3 width="50%" colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=textBoldSmallFlight width="29%">Duration:</TD>
+<TD id=segDuration_5_0>9:40 </TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="29%">Aircraft:</TD>
+<TD id=segAircraft_5_0>
+<FORM id=AirCraftInfo332 class=transparentForm method=post name=AirCraftInfo332 action=/plnext/XCMTXITN/AirCraftInfo.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirCraftInfo><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRCRAFT_CODE value=332 type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirCraftInfo332'),'popupAirCraftInfo',610,600)">Airbus Industrie A330-200</A> </FORM></TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="29%" noWrap>Last check in:</TD>
+<TD id=segChkIn_5_0>1:00 before flight</TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD></TD>
+<TD id=segOpBy_5_0><SPAN class=textSmaller></SPAN></TD></TR>
+<TR id=faretype>
+<TD class=textBoldSmallFlight noWrap>Fare type:</TD>
+<TD id=segFareType_5_0>Economy Restricted </TD></TR>
+<TR>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=4>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD id=segMeal_5_0 width="66%"><SPAN class=ImgPlate>&nbsp;</SPAN>BREAKFAST, DINNER </TD>
+<TD id=segFlightInfo_5_0 width="33%"><SPAN class=ImgFlightStatus>&nbsp;</SPAN> <A class=textSmaller href="javascript:redirectToAnExternalPopUp('/plnext/XCMTXITN/FlightStatusPopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?PAGE_TICKET=&amp;B_LOCATION=GIG&amp;E_LOCATION=LIS&amp;B_DATE=201110161820&amp;AIRLINE_CODE=TP&amp;FLIGHT_NUMBER=178&amp;SITE=XCMTXITN&amp;LANGUAGE=GB',550,450)">current flight status</A> </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD class=space colSpan=3></TD></TR>
+<TR>
+<TD class=border colSpan=3><SPAN class=ImgPlane2>&nbsp;</SPAN> 
+<DIV class="textChangeAirport textChangeAirportTextBold">Change of plane required. Time between flights : 1:35. </DIV></TD></TR>
+<TR>
+<TD></TD>
+<TD class=space colSpan=2>&nbsp;</TD></TR>
+<TR>
+<TD class="textBold flight">Flight 2</TD>
+<TD class=textBold width="83%" colSpan=2>Monday, October 17, 2011 </TD></TR>
+<TR>
+<TD class=textColorBold vAlign=top>&nbsp;confirmed</TD>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=3>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=textBold width="15%"><SPAN class=nowrap>Departure:</SPAN></TD>
+<TD class=nowrap>08:35</TD>
+<TD width="90%">Lisbon, Portugal - 
+<FORM id=AirportGuidesLIS class=transparentForm method=post name=AirportGuidesLIS action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRPORT_CODE value=LIS type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesLIS'),'popupAirportGuides',610,620)">Airport </A></FORM>, terminal 1 </TD></TR>
+<TR>
+<TD class=textBold><SPAN class=nowrap>Arrival:</SPAN></TD>
+<TD class=nowrap>12:40 </TD>
+<TD>Frankfurt, Germany - 
+<FORM id=AirportGuidesFRA class=transparentForm method=post name=AirportGuidesFRA action=/plnext/XCMTXITN/AirportGuides.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirportGuides><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRPORT_CODE value=FRA type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirportGuidesFRA'),'popupAirportGuides',610,620)">Frankfurt International </A></FORM>, terminal 1 </TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD class=space colSpan=4></TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="15%">Airline: </TD>
+<TD id=segAirline_5_1 width="35%">TAP Portugal&nbsp;TP570 </TD>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" vAlign=top rowSpan=3 width="50%" colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=textBoldSmallFlight width="29%">Duration:</TD>
+<TD id=segDuration_5_1>3:05 </TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="29%">Aircraft:</TD>
+<TD id=segAircraft_5_1>
+<FORM id=AirCraftInfo319 class=transparentForm method=post name=AirCraftInfo319 action=/plnext/XCMTXITN/AirCraftInfo.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAirCraftInfo><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRCRAFT_CODE value=319 type=hidden> <A href="javascript:submitFormToNewPopUp(document.getElementById('AirCraftInfo319'),'popupAirCraftInfo',610,600)">Airbus Industrie A319</A> </FORM></TD></TR>
+<TR>
+<TD class=textBoldSmallFlight width="29%" noWrap>Last check in:</TD>
+<TD id=segChkIn_5_1>information not available</TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD></TD>
+<TD id=segOpBy_5_1><SPAN class=textSmaller></SPAN></TD></TR>
+<TR id=faretype>
+<TD class=textBoldSmallFlight noWrap>Fare type:</TD>
+<TD id=segFareType_5_1>Economy Restricted </TD></TR>
+<TR>
+<TD style="PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px" colSpan=4>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD id=segMeal_5_1 width="66%"><SPAN class=ImgPlate>&nbsp;</SPAN>MEAL (NON SPECIFIC) </TD>
+<TD id=segFlightInfo_5_1 width="33%"><SPAN class=ImgFlightStatus>&nbsp;</SPAN> <A class=textSmaller href="javascript:redirectToAnExternalPopUp('/plnext/XCMTXITN/FlightStatusPopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?PAGE_TICKET=&amp;B_LOCATION=LIS&amp;E_LOCATION=FRA&amp;B_DATE=201110170835&amp;AIRLINE_CODE=TP&amp;FLIGHT_NUMBER=570&amp;SITE=XCMTXITN&amp;LANGUAGE=GB',550,450)">current flight status</A> </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD></TD>
+<TD class=space colSpan=2>&nbsp;</TD></TR></TBODY></TABLE></DIV>
+<DIV id=vcAIR1holder class="conf_expandPanel "><A id=vcAIR1 class="viewHide linkOpen" href="javascript:CONF.vcCMT('vcAIR1');">view details</A><SPAN id=vcAIR1span class="viewHide span_cep"> click to see additional information including price, payment and flight special requests</SPAN> 
+<DIV style="DISPLAY: none" id=vcAIR1div class=sectionHolder_conf><!--  -->
+<DIV id=sh_fltPayment class=sectionHolder>
+<TABLE class=tableConfText cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD class=textBold colSpan=3>Flight payment</TD></TR>
+<TR>
+<TD colSpan=3>
+<DIV id=id_flightPayment>
+<TABLE class=conf_payment border=0 cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR align=right>
+<TD>Air Fare not Available</TD></TR></TBODY></TABLE></DIV></TD></TR></TBODY></TABLE></DIV>
+<DIV id=hr_flightNotes class=div_hr>
+<DIV class=hr></DIV></DIV>
+<DIV id=sh_flightNotes class=sectionHolder>
+<TABLE class=tableConfText cellSpacing=0 cellPadding=0><!--flights notes-->
+<TBODY>
+<TR>
+<TD class=textBold>Flight Notes</TD></TR>
+<TR>
+<TD>• Not all seat and meal options are offered on all flights.</TD></TR>
+<TR>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>• Specific rules and restrictions may apply to this fare.</TD></TR>
+<TR>
+<TD>• Taxes are included except where local airport taxes are collected at check-in time.</TD></TR></TBODY></TABLE></DIV><!--Flight special requests for TripSum-->
+<DIV id=hr_specialReqTripSum class=div_hr>
+<DIV class=hr></DIV></DIV>
+<DIV id=sh_specialReqTripSum class="sectionHolder specialRequests"><!--etv i18n separator--><!--set url to modify flight special requests--><!-- ------------------------------------------------------------------------- --><!--       CR 2095284 - Seat and meal requests section on CONF                 --><!-- ------------------------------------------------------------------------- --><!-- Container DIV for this section. 2 Classes: one is the generic sectionHolder class
+       for padding. And the other is specialRequests --><!-- Hidden anchor for table of content quick access --><A id=special name=special></A><!-- Modify button --><!-- Section title -->
+<H2>Flight special requests</H2><!-- Requests table - Meal and seat request -->
+<TABLE class=requestsTable cellSpacing=0><!-- Table header (column titles) -->
+<THEAD>
+<TR><!-- Use the requestsColumn classname on the first cell of the header row -->
+<TD class=requestsColumn>Meal and seat request: </TD>
+<TD>Traveller</TD>
+<TD>Seat number <!-- Seatmap forms -->
+<FORM class=transparentForm method=post name=frmSeatMap1_1 action=/plnext/XCMTXITN/SeatMap.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163 target=popupSeatMap><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRLINE_CODE value=TP type=hidden> <INPUT name=B_AIRPORT_CODE value=FRA type=hidden> <INPUT name=E_AIRPORT_CODE value=LIS type=hidden ?> <INPUT name=FLIGHT value=575 type=hidden> <INPUT name=BOOKING_CLASS value=K type=hidden> <INPUT name=EQUIPMENT_TYPE value=319 type=hidden> <INPUT name=E_TIME value=1530 type=hidden> <INPUT name=B_DATE value=20111001 type=hidden> <INPUT name=B_TIME value=1330 type=hidden> <INPUT name=SEGMENT_ID value=1 type=hidden> <INPUT name=READ_ONLY_MODE value=1 type=hidden> <INPUT id=PREF_AIR_SEAT_ASSIGMENT_1_1 name=PREF_AIR_SEAT_ASSIGMENT_1_1 type=hidden> </FORM>
+<FORM class=transparentForm method=post name=frmSeatMap1_2 action=/plnext/XCMTXITN/SeatMap.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163 target=popupSeatMap><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRLINE_CODE value=TP type=hidden> <INPUT name=B_AIRPORT_CODE value=LIS type=hidden> <INPUT name=E_AIRPORT_CODE value=BSB type=hidden ?> <INPUT name=FLIGHT value=4175 type=hidden> <INPUT name=BOOKING_CLASS value=K type=hidden> <INPUT name=EQUIPMENT_TYPE value=332 type=hidden> <INPUT name=E_TIME value=1535 type=hidden> <INPUT name=B_DATE value=20111002 type=hidden> <INPUT name=B_TIME value=0955 type=hidden> <INPUT name=SEGMENT_ID value=2 type=hidden> <INPUT name=READ_ONLY_MODE value=1 type=hidden> <INPUT id=PREF_AIR_SEAT_ASSIGMENT_1_2 name=PREF_AIR_SEAT_ASSIGMENT_1_2 type=hidden> </FORM>
+<FORM class=transparentForm method=post name=frmSeatMap1_3 action=/plnext/XCMTXITN/SeatMap.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163 target=popupSeatMap><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRLINE_CODE value=G3 type=hidden> <INPUT name=B_AIRPORT_CODE value=BSB type=hidden> <INPUT name=E_AIRPORT_CODE value=CGB type=hidden ?> <INPUT name=FLIGHT value=1636 type=hidden> <INPUT name=BOOKING_CLASS value=B type=hidden> <INPUT name=EQUIPMENT_TYPE value=738 type=hidden> <INPUT name=E_TIME value=1030 type=hidden> <INPUT name=B_DATE value=20111003 type=hidden> <INPUT name=B_TIME value=0936 type=hidden> <INPUT name=SEGMENT_ID value=10 type=hidden> <INPUT name=READ_ONLY_MODE value=1 type=hidden> <INPUT id=PREF_AIR_SEAT_ASSIGMENT_1_10 name=PREF_AIR_SEAT_ASSIGMENT_1_10 type=hidden> </FORM>
+<FORM class=transparentForm method=post name=frmSeatMap1_4 action=/plnext/XCMTXITN/SeatMap.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163 target=popupSeatMap><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRLINE_CODE value=G3 type=hidden> <INPUT name=B_AIRPORT_CODE value=CGB type=hidden> <INPUT name=E_AIRPORT_CODE value=BSB type=hidden ?> <INPUT name=FLIGHT value=1637 type=hidden> <INPUT name=BOOKING_CLASS value=N type=hidden> <INPUT name=EQUIPMENT_TYPE value=738 type=hidden> <INPUT name=E_TIME value=2054 type=hidden> <INPUT name=B_DATE value=20111007 type=hidden> <INPUT name=B_TIME value=1820 type=hidden> <INPUT name=SEGMENT_ID value=19 type=hidden> <INPUT name=READ_ONLY_MODE value=1 type=hidden> <INPUT id=PREF_AIR_SEAT_ASSIGMENT_1_19 name=PREF_AIR_SEAT_ASSIGMENT_1_19 type=hidden> </FORM>
+<FORM class=transparentForm method=post name=frmSeatMap2_4 action=/plnext/XCMTXITN/SeatMap.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163 target=popupSeatMap><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRLINE_CODE value=G3 type=hidden> <INPUT name=B_AIRPORT_CODE value=BSB type=hidden> <INPUT name=E_AIRPORT_CODE value=IGU type=hidden ?> <INPUT name=FLIGHT value=1631 type=hidden> <INPUT name=BOOKING_CLASS value=N type=hidden> <INPUT name=EQUIPMENT_TYPE value=738 type=hidden> <INPUT name=E_TIME value=0110 type=hidden> <INPUT name=B_DATE value=20111007 type=hidden> <INPUT name=B_TIME value=2135 type=hidden> <INPUT name=SEGMENT_ID value=21 type=hidden> <INPUT name=READ_ONLY_MODE value=1 type=hidden> <INPUT id=PREF_AIR_SEAT_ASSIGMENT_1_21 name=PREF_AIR_SEAT_ASSIGMENT_1_21 type=hidden> </FORM>
+<FORM class=transparentForm method=post name=frmSeatMap1_5 action=/plnext/XCMTXITN/SeatMap.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163 target=popupSeatMap><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRLINE_CODE value=G3 type=hidden> <INPUT name=B_AIRPORT_CODE value=IGU type=hidden> <INPUT name=E_AIRPORT_CODE value=CWB type=hidden ?> <INPUT name=FLIGHT value=1851 type=hidden> <INPUT name=BOOKING_CLASS value=U type=hidden> <INPUT name=EQUIPMENT_TYPE value=738 type=hidden> <INPUT name=E_TIME value=1455 type=hidden> <INPUT name=B_DATE value=20111009 type=hidden> <INPUT name=B_TIME value=1400 type=hidden> <INPUT name=SEGMENT_ID value=20 type=hidden> <INPUT name=READ_ONLY_MODE value=1 type=hidden> <INPUT id=PREF_AIR_SEAT_ASSIGMENT_1_20 name=PREF_AIR_SEAT_ASSIGMENT_1_20 type=hidden> </FORM>
+<FORM class=transparentForm method=post name=frmSeatMap1_6 action=/plnext/XCMTXITN/SeatMap.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163 target=popupSeatMap><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRLINE_CODE value=TP type=hidden> <INPUT name=B_AIRPORT_CODE value=GIG type=hidden> <INPUT name=E_AIRPORT_CODE value=LIS type=hidden ?> <INPUT name=FLIGHT value=178 type=hidden> <INPUT name=BOOKING_CLASS value=K type=hidden> <INPUT name=EQUIPMENT_TYPE value=332 type=hidden> <INPUT name=E_TIME value=0700 type=hidden> <INPUT name=B_DATE value=20111016 type=hidden> <INPUT name=B_TIME value=1820 type=hidden> <INPUT name=SEGMENT_ID value=7 type=hidden> <INPUT name=READ_ONLY_MODE value=1 type=hidden> <INPUT id=PREF_AIR_SEAT_ASSIGMENT_1_7 name=PREF_AIR_SEAT_ASSIGMENT_1_7 type=hidden> </FORM>
+<FORM class=transparentForm method=post name=frmSeatMap2_6 action=/plnext/XCMTXITN/SeatMap.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163 target=popupSeatMap><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=AIRLINE_CODE value=TP type=hidden> <INPUT name=B_AIRPORT_CODE value=LIS type=hidden> <INPUT name=E_AIRPORT_CODE value=FRA type=hidden ?> <INPUT name=FLIGHT value=570 type=hidden> <INPUT name=BOOKING_CLASS value=K type=hidden> <INPUT name=EQUIPMENT_TYPE value=319 type=hidden> <INPUT name=E_TIME value=1240 type=hidden> <INPUT name=B_DATE value=20111017 type=hidden> <INPUT name=B_TIME value=0835 type=hidden> <INPUT name=SEGMENT_ID value=8 type=hidden> <INPUT name=READ_ONLY_MODE value=1 type=hidden> <INPUT id=PREF_AIR_SEAT_ASSIGMENT_1_8 name=PREF_AIR_SEAT_ASSIGMENT_1_8 type=hidden> </FORM></TD>
+<TD>Seat location</TD>
+<TD>Meal preference</TD></TR></THEAD><!-- Table content -->
+<TBODY><!-- Use boundTitle classname on rows that contain a travel bound (nice to brest) -->
+<TR class=boundTitle>
+<TH>Frankfurt - Lisbon </TH>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD></TR><!-- Use segmentTitle classname on rows that contain a single segment -->
+<TR class=segmentTitle>
+<TH>Flight 1: Frankfurt - Lisbon </TH>
+<TD>Manfred Siekmann </TD>
+<TD>None specified </TD>
+<TD>None specified </TD>
+<TD>No special meal </TD></TR>
+<TR class=boundTitle>
+<TH>Lisbon - Brasilia </TH>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD></TR><!-- Use segmentTitle classname on rows that contain a single segment -->
+<TR class=segmentTitle>
+<TH>Flight 1: Lisbon - Brasilia </TH>
+<TD>Manfred Siekmann </TD>
+<TD>None specified </TD>
+<TD>None specified </TD>
+<TD>No special meal </TD></TR>
+<TR class=boundTitle>
+<TH>Brasilia - Cuiaba </TH>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD></TR><!-- Use segmentTitle classname on rows that contain a single segment -->
+<TR class=segmentTitle>
+<TH>Flight 1: Brasilia - Cuiaba </TH>
+<TD>Manfred Siekmann </TD>
+<TD>None specified </TD>
+<TD>None specified </TD>
+<TD>No special meal </TD></TR>
+<TR class=boundTitle>
+<TH>Cuiaba - Iguassu Falls </TH>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD></TR><!-- Use segmentTitle classname on rows that contain a single segment -->
+<TR class=segmentTitle>
+<TH>Flight 1: Cuiaba - Brasilia </TH>
+<TD>Manfred Siekmann </TD>
+<TD>None specified </TD>
+<TD>None specified </TD>
+<TD>No special meal </TD></TR>
+<TR class=segmentTitle>
+<TH>Flight 2: Brasilia - Iguassu Falls </TH>
+<TD>Manfred Siekmann </TD>
+<TD>None specified </TD>
+<TD>None specified </TD>
+<TD>No special meal </TD></TR>
+<TR class=boundTitle>
+<TH>Iguassu Falls - Curitiba </TH>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD></TR><!-- Use segmentTitle classname on rows that contain a single segment -->
+<TR class=segmentTitle>
+<TH>Flight 1: Iguassu Falls - Curitiba </TH>
+<TD>Manfred Siekmann </TD>
+<TD>None specified </TD>
+<TD>None specified </TD>
+<TD>No special meal </TD></TR>
+<TR class=boundTitle>
+<TH>Rio De Janeiro - Frankfurt </TH>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD></TR><!-- Use segmentTitle classname on rows that contain a single segment -->
+<TR class=segmentTitle>
+<TH>Flight 1: Rio De Janeiro - Lisbon </TH>
+<TD>Manfred Siekmann </TD>
+<TD>None specified </TD>
+<TD>None specified </TD>
+<TD>No special meal </TD></TR>
+<TR class=segmentTitle>
+<TH>Flight 2: Lisbon - Frankfurt </TH>
+<TD>Manfred Siekmann </TD>
+<TD>None specified </TD>
+<TD>None specified </TD>
+<TD>No special meal </TD></TR></TBODY></TABLE><!-- Requests table - Other requests -->
+<TABLE class=requestsTable cellSpacing=0><!-- Table header (column titles) -->
+<THEAD>
+<TR><!-- Use the requestsColumn classname on the first cell of the header row -->
+<TD class=requestsColumn>Other requests</TD>
+<TD>Traveller</TD>
+<TD>Specifications</TD></TR></THEAD><!-- Table content -->
+<TBODY><!--Assistance needed-->
+<TR class=requestTitle>
+<TH>Meet and assist travellers with special needs: </TH>
+<TD>Manfred Siekmann </TD>
+<TD>None specified </TD></TR><!--Wheelchairs needed-->
+<TR class=requestTitle>
+<TH>Wheelchairs needed: </TH>
+<TD>Manfred Siekmann </TD>
+<TD>0 </TD></TR><!--Travelling with sport equipment--><!--Travelling with an animal--></TBODY></TABLE><!-- ------------------------------------------------------------------------- --><!--                         End of  HTML for CR 2095288                       --><!-- ------------------------------------------------------------------------- --><!-- Information paragraph after the table -->
+<P><SPAN class=ImgCheck>&nbsp;</SPAN>Indicates airline has confirmed your seat or meal requests. If it has not been confirmed within 24 hours, you may want to contact the airline directly.</P></DIV></DIV></DIV><!-- Eticket legal notice and remarks --><!-- CR2199611: panel that contains the recap of selected services --><!--Non visible div, used to hide every non air segments in case of ITR view-->
+<DIV id=id_nonAirSegments><!--Train--><!--Cruise--><!--Tour--><!--Car--><!--Hotel--><!--Ground Transportation--><!--Air Taxi--><!--miscellaneous--><!--display insurance section--><!--content from check my trips-->
+<DIV id=id_destInfo>
+<TABLE class=tableSubHeader cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD>destination information</TD></TR></TBODY></TABLE></DIV>
+<DIV id=sh_destInfo class=sectionHolder>
+<DIV id=di_o1 class=destInfoPanel><STRONG>Lisbon, Portugal</STRONG> <A id=vcCEP_DNI0 class=linkOpen href="javascript:CONF.vcCMT('vcCEP_DNI0');">view details </A><SPAN id=vcCEP_DNI0span class=span_cep></SPAN>
+<DIV style="DISPLAY: none" id=vcCEP_DNI0div class=destInfoPanel>
+<TABLE class=tableBodyText cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD width="40%"><SPAN class=textBold>Current weather</SPAN><BR>
+<FORM id=ForecastLIS class=transparentForm method=post name=ForecastLIS action=/plnext/XCMTXITN/ForecastPopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupForecast>
+<TABLE border=0 cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD style="TEXT-ALIGN: center"><IMG src="https://www.checkmytrip.com/plnext/XCMTXITN/201103291323/static/img/cmt/Ice/weather/21.gif" width=30 height=30> </TD>
+<TD style="TEXT-ALIGN: left; VERTICAL-ALIGN: top">Sunny<BR>High: 27&nbsp;ºC<BR>Low: 17&nbsp;ºC<BR><INPUT id=temperature name=temperature value=C type=hidden> <INPUT id=daysNames name=daysNames value=;Tuesday;Wednesday;Thursday;Friday;Saturday type=hidden> <INPUT id=daysLow name=daysLow value=;17;15;16;17;16 type=hidden> <INPUT id=daysHigh name=daysHigh value=;27;27;28;27;26 type=hidden> <INPUT id=daysSkyDescription name=daysSkyDescription value=;Sunny;Sunny;Sunny;Sunny;Sunny type=hidden> <INPUT id=daysSkyDescriptionCode name=daysSkyDescriptionCode value=;21;21;21;21;21 type=hidden> <INPUT id=city name=city value="Lisbon, LIS" type=hidden> </TD></TR>
+<TR>
+<TD colSpan=2><A href="javascript:submitFormToNewPopUp(document.forms.ForecastLIS,'popupForecast',500,250)">5-day forecast</A></TD></TR></TBODY></TABLE></FORM></TD>
+<TD width="30%"><SPAN class=textBold>Averages</SPAN><BR>High: 21&nbsp;ºC<BR>Low: 14.0&nbsp;ºC<BR>Rainfall: 0.0 mm<BR>
+<FORM id=AverageLIS class=transparentForm method=post name=AverageLIS action=/plnext/XCMTXITN/AveragePopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAverage><INPUT id=averageTemperatureLIS name=averageTemperature value=C type=hidden> <INPUT id=rainfallUnitLIS name=rainfallUnit value=mm type=hidden> <INPUT id=monthsMonthNameLIS name=monthsMonthName value=;J;F;M;A;M;J;J;A;S;O;N;D type=hidden> <INPUT id=monthsLowLIS name=monthsLow value=;8.0;8.0;10.0;12.0;13.0;15.0;16.0;17.0;16.0;14.0;11.0;9.0 type=hidden> <INPUT id=monthsHighLIS name=monthsHigh value=;14;15;17;19;22;24;27;27;25;21;17;15 type=hidden> <INPUT id=monthsRainfallLIS name=monthsRainfall value=;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0 type=hidden> <INPUT id=cityLIS name=city value="Lisbon, LIS" type=hidden> <A href="javascript:submitFormToNewPopUp(document.forms.AverageLIS,'popupAverage',650,345)">Average</A> </FORM></TD>
+<TD vAlign=top width="30%"><SPAN class=textBold>Trip tools:</SPAN><BR>
+<FORM id=SubwayMapLIS class=transparentForm method=post name=SubwayMapLIS action=/plnext/XCMTXITN/SubwayMap.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupSubwayMap><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=MAP_CITY_CODE value=LIS type=hidden> <INPUT name=MAP_LANGUAGE value=GB type=hidden> <A href="javascript:submitFormToNewPopUp(document.forms.SubwayMapLIS,'popupSubwayMap',610,600)">Subway map</A> </FORM></TD></TR></TBODY></TABLE></DIV></DIV>
+<DIV id=di_o2 class=destInfoPanel><STRONG>Brasilia, Brazil</STRONG> <A id=vcCEP_DNI1 class=linkOpen href="javascript:CONF.vcCMT('vcCEP_DNI1');">view details </A><SPAN id=vcCEP_DNI1span class=span_cep></SPAN>
+<DIV style="DISPLAY: none" id=vcCEP_DNI1div class=destInfoPanel>
+<TABLE class=tableBodyText cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD width="40%"><SPAN class=textBold>Current weather</SPAN><BR>
+<FORM id=ForecastBSB class=transparentForm method=post name=ForecastBSB action=/plnext/XCMTXITN/ForecastPopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupForecast>
+<TABLE border=0 cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD style="TEXT-ALIGN: center"><IMG src="https://www.checkmytrip.com/plnext/XCMTXITN/201103291323/static/img/cmt/Ice/weather/50.gif" width=30 height=30> </TD>
+<TD style="TEXT-ALIGN: left; VERTICAL-ALIGN: top">Mostly Cloudy<BR>High: 27&nbsp;ºC<BR>Low: 15&nbsp;ºC<BR><INPUT id=temperature name=temperature value=C type=hidden> <INPUT id=daysNames name=daysNames value=;Tuesday;Wednesday;Thursday;Friday;Saturday type=hidden> <INPUT id=daysLow name=daysLow value=;15;14;15;15;14 type=hidden> <INPUT id=daysHigh name=daysHigh value=;27;25;27;26;26 type=hidden> <INPUT id=daysSkyDescription name=daysSkyDescription value=";Mostly Cloudy;Mostly Sunny;Sunny;Rain showers;" type=hidden> <INPUT id=daysSkyDescriptionCode name=daysSkyDescriptionCode value=;50;5;21;23;0 type=hidden> <INPUT id=city name=city value="Brasilia, BSB" type=hidden> </TD></TR>
+<TR>
+<TD colSpan=2><A href="javascript:submitFormToNewPopUp(document.forms.ForecastBSB,'popupForecast',500,250)">5-day forecast</A></TD></TR></TBODY></TABLE></FORM></TD>
+<TD width="30%"><SPAN class=textBold>Averages</SPAN><BR>High: 31&nbsp;ºC<BR>Low: 18.0&nbsp;ºC<BR>Rainfall: 123.0 mm<BR>
+<FORM id=AverageBSB class=transparentForm method=post name=AverageBSB action=/plnext/XCMTXITN/AveragePopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAverage><INPUT id=averageTemperatureBSB name=averageTemperature value=C type=hidden> <INPUT id=rainfallUnitBSB name=rainfallUnit value=mm type=hidden> <INPUT id=monthsMonthNameBSB name=monthsMonthName value=;J;F;M;A;M;J;J;A;S;O;N;D type=hidden> <INPUT id=monthsLowBSB name=monthsLow value=;19.0;19.0;18.0;17.0;15.0;12.0;12.0;14.0;17.0;18.0;19.0;19.0 type=hidden> <INPUT id=monthsHighBSB name=monthsHigh value=;29;29;29;29;28;27;28;30;31;31;30;29 type=hidden> <INPUT id=monthsRainfallBSB name=monthsRainfall value=;229.0;198.0;121.0;86.0;36.0;42.0;0.0;1.0;33.0;123.0;246.0;296.0 type=hidden> <INPUT id=cityBSB name=city value="Brasilia, BSB" type=hidden> <A href="javascript:submitFormToNewPopUp(document.forms.AverageBSB,'popupAverage',650,345)">Average</A> </FORM></TD>
+<TD vAlign=top width="30%"><SPAN class=textBold>Trip tools:</SPAN><BR>
+<FORM id=SubwayMapBSB class=transparentForm method=post name=SubwayMapBSB action=/plnext/XCMTXITN/SubwayMap.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupSubwayMap><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=MAP_CITY_CODE value=BSB type=hidden> <INPUT name=MAP_LANGUAGE value=GB type=hidden> <A href="javascript:submitFormToNewPopUp(document.forms.SubwayMapBSB,'popupSubwayMap',610,600)">Subway map</A> </FORM></TD></TR></TBODY></TABLE></DIV></DIV>
+<DIV id=di_o3 class=destInfoPanel><STRONG>Cuiaba, Brazil</STRONG> <A id=vcCEP_DNI2 class=linkOpen href="javascript:CONF.vcCMT('vcCEP_DNI2');">view details </A><SPAN id=vcCEP_DNI2span class=span_cep></SPAN>
+<DIV style="DISPLAY: none" id=vcCEP_DNI2div class=destInfoPanel>
+<TABLE class=tableBodyText cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD width="40%"><SPAN class=textBold>Current weather</SPAN><BR>
+<FORM id=ForecastCGB class=transparentForm method=post name=ForecastCGB action=/plnext/XCMTXITN/ForecastPopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupForecast>
+<TABLE border=0 cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD style="TEXT-ALIGN: center"><IMG src="https://www.checkmytrip.com/plnext/XCMTXITN/201103291323/static/img/cmt/Ice/weather/20.gif" width=30 height=30> </TD>
+<TD style="TEXT-ALIGN: left; VERTICAL-ALIGN: top">Thunderstorms<BR>High: 30&nbsp;ºC<BR>Low: 21&nbsp;ºC<BR><INPUT id=temperature name=temperature value=C type=hidden> <INPUT id=daysNames name=daysNames value=;Tuesday;Wednesday;Wednesday;null;Friday type=hidden> <INPUT id=daysLow name=daysLow value=;21;21;21;21;21 type=hidden> <INPUT id=daysHigh name=daysHigh value=;30;31;31;32;31 type=hidden> <INPUT id=daysSkyDescription name=daysSkyDescription value=;Thunderstorms;;;;Thunderstorms type=hidden> <INPUT id=daysSkyDescriptionCode name=daysSkyDescriptionCode value=;20;0;0;0;20 type=hidden> <INPUT id=city name=city value="Cuiaba, CGB" type=hidden> </TD></TR>
+<TR>
+<TD colSpan=2><A href="javascript:submitFormToNewPopUp(document.forms.ForecastCGB,'popupForecast',500,250)">5-day forecast</A></TD></TR></TBODY></TABLE></FORM></TD>
+<TD width="30%"><SPAN class=textBold>Averages</SPAN><BR>High: 33&nbsp;ºC<BR>Low: 22.0&nbsp;ºC<BR>Rainfall: 132.0 mm<BR>
+<FORM id=AverageCGB class=transparentForm method=post name=AverageCGB action=/plnext/XCMTXITN/AveragePopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAverage><INPUT id=averageTemperatureCGB name=averageTemperature value=C type=hidden> <INPUT id=rainfallUnitCGB name=rainfallUnit value=mm type=hidden> <INPUT id=monthsMonthNameCGB name=monthsMonthName value=;J;F;M;A;M;J;J;A;S;O;N;D type=hidden> <INPUT id=monthsLowCGB name=monthsLow value=;22.0;22.0;22.0;21.0;19.0;17.0;17.0;18.0;20.0;22.0;22.0;22.0 type=hidden> <INPUT id=monthsHighCGB name=monthsHigh value=;33;32;32;32;31;31;32;33;33;33;32;32 type=hidden> <INPUT id=monthsRainfallCGB name=monthsRainfall value=;254.0;217.0;205.0;102.0;55.0;12.0;7.0;27.0;45.0;132.0;151.0;205.0 type=hidden> <INPUT id=cityCGB name=city value="Cuiaba, CGB" type=hidden> <A href="javascript:submitFormToNewPopUp(document.forms.AverageCGB,'popupAverage',650,345)">Average</A> </FORM></TD>
+<TD vAlign=top width="30%"><SPAN class=textBold>Trip tools:</SPAN><BR>information not available </TD></TR></TBODY></TABLE></DIV></DIV>
+<DIV id=di_o4 class=destInfoPanel><STRONG>Iguassu Falls, Brazil</STRONG> <A id=vcCEP_DNI3 class=linkOpen href="javascript:CONF.vcCMT('vcCEP_DNI3');">view details </A><SPAN id=vcCEP_DNI3span class=span_cep></SPAN>
+<DIV style="DISPLAY: none" id=vcCEP_DNI3div class=destInfoPanel>
+<TABLE class=tableBodyText cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD width="40%"><SPAN class=textBold>Current weather</SPAN><BR>
+<FORM id=ForecastIGU class=transparentForm method=post name=ForecastIGU action=/plnext/XCMTXITN/ForecastPopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupForecast>
+<TABLE border=0 cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD style="TEXT-ALIGN: center"><IMG src="https://www.checkmytrip.com/plnext/XCMTXITN/201103291323/static/img/cmt/Ice/weather/18.gif" width=30 height=30> </TD>
+<TD style="TEXT-ALIGN: left; VERTICAL-ALIGN: top">Rain<BR>High: 25&nbsp;ºC<BR>Low: 15&nbsp;ºC<BR><INPUT id=temperature name=temperature value=C type=hidden> <INPUT id=daysNames name=daysNames value=;Tuesday;Wednesday;Thursday;Friday;Saturday type=hidden> <INPUT id=daysLow name=daysLow value=;15;17;17;16;17 type=hidden> <INPUT id=daysHigh name=daysHigh value=;25;27;27;26;27 type=hidden> <INPUT id=daysSkyDescription name=daysSkyDescription value=;Rain;Thunderstorms;Thunderstorms;Thunderstorms;Thunderstorms type=hidden> <INPUT id=daysSkyDescriptionCode name=daysSkyDescriptionCode value=;18;20;20;20;20 type=hidden> <INPUT id=city name=city value="Iguassu Falls, IGU" type=hidden> </TD></TR>
+<TR>
+<TD colSpan=2><A href="javascript:submitFormToNewPopUp(document.forms.ForecastIGU,'popupForecast',500,250)">5-day forecast</A></TD></TR></TBODY></TABLE></FORM></TD>
+<TD width="30%"><SPAN class=textBold>Averages</SPAN><BR>High: 28&nbsp;ºC<BR>Low: 18.0&nbsp;ºC<BR>Rainfall: 124.0 mm<BR>
+<FORM id=AverageIGU class=transparentForm method=post name=AverageIGU action=/plnext/XCMTXITN/AveragePopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAverage><INPUT id=averageTemperatureIGU name=averageTemperature value=C type=hidden> <INPUT id=rainfallUnitIGU name=rainfallUnit value=mm type=hidden> <INPUT id=monthsMonthNameIGU name=monthsMonthName value=;J;F;M;A;M;J;J;A;S;O;N;D type=hidden> <INPUT id=monthsLowIGU name=monthsLow value=;22.0;22.0;20.0;18.0;16.0;15.0;14.0;15.0;17.0;18.0;20.0;22.0 type=hidden> <INPUT id=monthsHighIGU name=monthsHigh value=;31;31;29;27;24;22;22;23;25;28;29;31 type=hidden> <INPUT id=monthsRainfallIGU name=monthsRainfall value=;150.0;150.0;150.0;145.0;134.0;115.0;89.0;80.0;115.0;124.0;134.0;139.0 type=hidden> <INPUT id=cityIGU name=city value="Iguassu Falls, IGU" type=hidden> <A href="javascript:submitFormToNewPopUp(document.forms.AverageIGU,'popupAverage',650,345)">Average</A> </FORM></TD>
+<TD vAlign=top width="30%"><SPAN class=textBold>Trip tools:</SPAN><BR>information not available </TD></TR></TBODY></TABLE></DIV></DIV>
+<DIV id=di_o5 class=destInfoPanel><STRONG>Curitiba, Brazil</STRONG> <A id=vcCEP_DNI4 class=linkOpen href="javascript:CONF.vcCMT('vcCEP_DNI4');">view details </A><SPAN id=vcCEP_DNI4span class=span_cep></SPAN>
+<DIV style="DISPLAY: none" id=vcCEP_DNI4div class=destInfoPanel>
+<TABLE class=tableBodyText cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD width="40%"><SPAN class=textBold>Current weather</SPAN><BR>information not available </TD>
+<TD width="30%"><SPAN class=textBold>Averages</SPAN><BR>High: 23&nbsp;ºC<BR>Low: 12.0&nbsp;ºC<BR>Rainfall: 134.0 mm<BR>
+<FORM id=AverageCWB class=transparentForm method=post name=AverageCWB action=/plnext/XCMTXITN/AveragePopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAverage><INPUT id=averageTemperatureCWB name=averageTemperature value=C type=hidden> <INPUT id=rainfallUnitCWB name=rainfallUnit value=mm type=hidden> <INPUT id=monthsMonthNameCWB name=monthsMonthName value=;J;F;M;A;M;J;J;A;S;O;N;D type=hidden> <INPUT id=monthsLowCWB name=monthsLow value=;16.0;16.0;15.0;12.0;9.0;8.0;8.0;8.0;10.0;12.0;13.0;14.0 type=hidden> <INPUT id=monthsHighCWB name=monthsHigh value=;27;26;25;22;20;18;19;20;21;23;25;26 type=hidden> <INPUT id=monthsRainfallCWB name=monthsRainfall value=;175.0;167.0;106.0;81.0;99.0;99.0;62.0;84.0;119.0;134.0;127.0;145.0 type=hidden> <INPUT id=cityCWB name=city value="Curitiba, CWB" type=hidden> <A href="javascript:submitFormToNewPopUp(document.forms.AverageCWB,'popupAverage',650,345)">Average</A> </FORM></TD>
+<TD vAlign=top width="30%"><SPAN class=textBold>Trip tools:</SPAN><BR>information not available </TD></TR></TBODY></TABLE></DIV></DIV>
+<DIV id=di_o6 class=destInfoPanel><STRONG>Frankfurt, Germany</STRONG> <A id=vcCEP_DNI5 class=linkOpen href="javascript:CONF.vcCMT('vcCEP_DNI5');">view details </A><SPAN id=vcCEP_DNI5span class=span_cep></SPAN>
+<DIV style="DISPLAY: none" id=vcCEP_DNI5div class=destInfoPanel>
+<TABLE class=tableBodyText cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD width="40%"><SPAN class=textBold>Current weather</SPAN><BR>
+<FORM id=ForecastFRA class=transparentForm method=post name=ForecastFRA action=/plnext/XCMTXITN/ForecastPopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupForecast>
+<TABLE border=0 cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD style="TEXT-ALIGN: center"><IMG src="https://www.checkmytrip.com/plnext/XCMTXITN/201103291323/static/img/cmt/Ice/weather/18.gif" width=30 height=30> </TD>
+<TD style="TEXT-ALIGN: left; VERTICAL-ALIGN: top">Rain<BR>High: 15&nbsp;ºC<BR>Low: 1&nbsp;ºC<BR><INPUT id=temperature name=temperature value=C type=hidden> <INPUT id=daysNames name=daysNames value=;Tuesday;Wednesday;Thursday;Friday;Saturday type=hidden> <INPUT id=daysLow name=daysLow value=;1;3;4;5;7 type=hidden> <INPUT id=daysHigh name=daysHigh value=;15;14;15;17;18 type=hidden> <INPUT id=daysSkyDescription name=daysSkyDescription value=";Rain;Rain showers;Sunny;Cloudy;Mostly Cloudy" type=hidden> <INPUT id=daysSkyDescriptionCode name=daysSkyDescriptionCode value=;18;23;21;3;50 type=hidden> <INPUT id=city name=city value="Frankfurt, FRA" type=hidden> </TD></TR>
+<TR>
+<TD colSpan=2><A href="javascript:submitFormToNewPopUp(document.forms.ForecastFRA,'popupForecast',500,250)">5-day forecast</A></TD></TR></TBODY></TABLE></FORM></TD>
+<TD width="30%"><SPAN class=textBold>Averages</SPAN><BR>High: 14&nbsp;ºC<BR>Low: 7.0&nbsp;ºC<BR>Rainfall: 55.0 mm<BR>
+<FORM id=AverageFRA class=transparentForm method=post name=AverageFRA action=/plnext/XCMTXITN/AveragePopUp.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupAverage><INPUT id=averageTemperatureFRA name=averageTemperature value=C type=hidden> <INPUT id=rainfallUnitFRA name=rainfallUnit value=mm type=hidden> <INPUT id=monthsMonthNameFRA name=monthsMonthName value=;J;F;M;A;M;J;J;A;S;O;N;D type=hidden> <INPUT id=monthsLowFRA name=monthsLow value=;-1.0;0.0;2.0;6.0;9.0;12.0;14.0;13.0;10.0;7.0;3.0;0.0 type=hidden> <INPUT id=monthsHighFRA name=monthsHigh value=;3;6;11;16;20;23;24;23;19;14;8;4 type=hidden> <INPUT id=monthsRainfallFRA name=monthsRainfall value=;42.0;33.0;40.0;38.0;51.0;62.0;71.0;66.0;48.0;55.0;51.0;51.0 type=hidden> <INPUT id=cityFRA name=city value="Frankfurt, FRA" type=hidden> <A href="javascript:submitFormToNewPopUp(document.forms.AverageFRA,'popupAverage',650,345)">Average</A> </FORM></TD>
+<TD vAlign=top width="30%"><SPAN class=textBold>Trip tools:</SPAN><BR>
+<FORM id=SubwayMapFRA class=transparentForm method=post name=SubwayMapFRA action=/plnext/XCMTXITN/SubwayMap.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB target=popupSubwayMap><INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=MAP_CITY_CODE value=FRA type=hidden> <INPUT name=MAP_LANGUAGE value=GB type=hidden> <A href="javascript:submitFormToNewPopUp(document.forms.SubwayMapFRA,'popupSubwayMap',610,600)">Subway map</A> </FORM></TD></TR></TBODY></TABLE></DIV></DIV></DIV><!-- general remarks --></DIV><!--Reservation Office Panel-->
+<TABLE class=tableSubHeader cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD>reservation office</TD></TR></TBODY></TABLE>
+<DIV id=resOffice class=sectionHolder>
+<TABLE class=tableConfText cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD><SPAN id=resOffAdd>FILEKEYS RESERVATION SERVICES CONSULTOR<BR>SERVIDAO FAMILIA DAMASCO, 50<BR>CEP: 88052-120<BR>FLORIANOPOLIS<BR>BRAZIL<BR>Tel:(47) 3001-5014<BR>Fax:(47) 3001-5014<BR>E-mail:ELQUE.ROEPKE@FILEKEYS.COM.BR<BR></SPAN></TD>
+<TD style="PADDING-LEFT: 0px" vAlign=top>&nbsp; </TD></TR></TBODY></TABLE></DIV>
+<DIV id=po_bottom class=page_options>
+<UL><!-- Print link --><!-- PTR03068518 - www - AeRE121 - CONF Icon not well displayed under FF2 -->
+<LI class=po_1><A class=po_print href="javascript:CONF.print();">print page</A> <!-- Download to Calendar link --><!-- PTR03068518 - www - AeRE121 - CONF Icon not well displayed under FF2 --></LI>
+<LI class=po_2><A class=po_download href="javascript:redirectToAnExternalPopUp('/plnext/XCMTXITN/CalendarDownload.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB',500,500);">download to calendar</A> <!-- EMail to a friend link --><!-- PTR03068518 - www - AeRE121 - CONF Icon not well displayed under FF2 --></LI>
+<LI class=po_3><A class=po_email href="javascript:emailToAFriend();">e-mail to a friend</A> <!-- Start Over link --><!-- PTR03068518 - www - AeRE121 - CONF Icon not well displayed under FF2 --><!-- Cancel Reservation link --><!-- PTR03068518 - www - AeRE121 - CONF Icon not well displayed under FF2 --></LI></UL>
+<DIV class=clear></DIV></DIV>
+<TABLE class=tableNavHeader cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD><A href="/plnext/XCMTXITN/StartOver.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB">View other itinerary</A></TD></TR></TBODY></TABLE></DIV>
+<FORM id=CONFStartOverForm method=post name=CONFStartOverForm action=/plnext/XCMTXITN/StartOver.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB></FORM>
+<FORM id=CONFCancelReservationForm method=post name=CONFCancelReservationForm action=/plnext/XCMTXITN/CancelPNR.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB></FORM>
+<FORM id=CONFRemoveFlightsForm method=post name=CONFRemoveFlightsForm action=/plnext/XCMTXITN/removeFlights.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB><INPUT name=TYPE value=AIR type=hidden> <INPUT name=PAGE_TICKET value=0 type=hidden> <INPUT name=SESSION_ID type=hidden> <INPUT name=ACTION value=MODIFY type=hidden> </FORM>
+<FORM id=CONFPendingFlightsForm method=post name=CONFPendingFlightsForm action=/plnext/XCMTXITN/ConfirmFlight.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163?SITE=XCMTXITN&amp;LANGUAGE=GB><INPUT name=SESSION_ID type=hidden> <INPUT name=DIRECT_RETRIEVE_LASTNAME value=Siekmann type=hidden> <INPUT name=ACTION value=BOOK type=hidden> <INPUT name=DIRECT_RETRIEVE value=TRUE type=hidden> <INPUT name=REGISTER_START_OVER value=false type=hidden> <INPUT name=REC_LOC value=X792MS type=hidden> </FORM>
+<FORM id=CONFPayPendingFlightsForm method=post name=CONFPayPendingFlightsForm action=https://www.checkmytrip.com/plnext/XCMTXITN/OnHoldModifyDispatcher.action;jsessionid=JxnxN14FJn9W15zdJ0cZzYPLGBtjZ6QmHB3VV1M2ysQ1c1FyV8PJ!-783707431!740000163><INPUT name=PAGE_TICKET value=0 type=hidden> <INPUT name=REGISTER_START_OVER value=false type=hidden> <INPUT name=SITE value=XCMTXITN type=hidden> <INPUT name=LANGUAGE value=GB type=hidden> <INPUT name=IS_PAY_ON_HOLD value=IS_PAY_ON_HOLD type=hidden> <INPUT name=IS_DOB_MANDATORY value=false type=hidden> </FORM>
+<SCRIPT language=Javascript type=text/javascript>
+      CONF.init();
+      </SCRIPT>
+
+<SCRIPT language=javascript type=text/javascript>
+<!-- 
+  WDSError.init();
+  WDSError.setTitle(WDSMessage.getMessage("WDSError.Title.E"));
+  
+  
+  
+  
+  <!--test-->
+  
+
+  <!--end test-->
+  
+	
+    
+  	if (WDSError.hasError()) {
+    	WDSError.show();
+    }
+    
+  
+
+-->
+</SCRIPT>
+
+<TABLE id=cmtr_footerTableId class=footerTable cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD><A id=lnkPrivacy class=linkMenuFooter href="https://www.checkmytrip.com/plnext/default/WPN_AeRE_v14.1_117O_180411/static/html/privacy/cmt/GB/CMT_Privacy_Statement.html">privacy statement</A> </TD></TR></TBODY></TABLE>
+<TABLE id=cmtr_footerTableCopyId class=footerTableCopy cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD>© 2011 Amadeus IT Group SA. All Rights Reserved<BR><BR>Experience new and innovative features at Amadeus Ideas web site <A href="http://www.ideas.amadeus.com" target=_blank>here</A> </TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD class=layoutBottom>
+<DIV id=bottomEdge></DIV>
+<DIV id=languages align=center>
+<SCRIPT language=JavaScript type=text/javascript>
+function changeLanguage(language) {
+ var recloc = document.custom.pnrNbr.value;
+ var lastname = document.custom.primaryTravellerLastName.value;
+ if(recloc != '' && lastname != '') {
+   location.href = 'https://www.checkmytrip.com/plnext/XCMTXITN/RetrievePNR.action?SITE=XCMTXITN&DIRECT_RETRIEVE=TRUE&LANGUAGE=' + language + '&REC_LOC=' + recloc + '&DIRECT_RETRIEVE_LASTNAME=' + lastname;
+ }
+}
+</SCRIPT>
+<A href="javascript:changeLanguage('AR');">عربي</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('BR');">Português do Brasil</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('CN');">简体中文</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('DE');">Deutsch</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('DK');">Dansk</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('ES');">Español</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('FI');">Suomi</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('FR');">Français</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('GB');">UK English</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('IS');">Íslenska</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('IT');">Italiano</A><BR><A href="javascript:changeLanguage('JP');">日本語</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('KO');">한국어</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('NL');">Nederlands</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('NO');">Norsk</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('PL');">Polski</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('PO');">Português</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('RU');">Русский</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('SE');">Svenska</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('TH');">ภาษาไทย</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('TK');">Türkçe</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('TW');">繁體中文</A>&nbsp;<B>·</B> <A href="javascript:changeLanguage('US');">US English</A> </DIV><BR></TD></TR></TBODY></TABLE></DIV>
+<SCRIPT type=text/javascript>
+// Variables and methods needed through out the page
+function Right(str, n){
+	if (n <= 0) {return "";}
+	else if (n > String(str).length) {return str;}
+	else {
+		var iLen = String(str).length;
+		return String(str).substring(iLen, iLen - n);
+	}
+}
+function days_between(date1_ms, date2_ms) {
+	var ONE_DAY = 1000 * 60 * 60 * 24;
+	var difference_ms = Math.abs(date1_ms - date2_ms);
+	return Math.round(difference_ms/ONE_DAY);
+}
+function minutes_between(date1_ms, date2_ms) {
+	var ONE_MINUTE = 1000 * 60;
+	var difference_ms = Math.abs(date1_ms - date2_ms);
+	return Math.round(difference_ms/ONE_MINUTE);
+}
+
+if(!window.data_isInitialized) {
+rtowin="";//Trip type (OW,RT,MULTI)
+wt_flights=""; //Flight numbers
+wt_origin=""; //Origin
+wt_ddate=""; // Departure date
+wt_destination=""; //Destination
+wt_countryfrom=""; //Country from
+wt_countryto=""; //Country to
+wt_numcitypairs=""; //Number of itineraries
+wt_numsegments=""; //Number of segments
+wt_flighthrs=""; //Total flight time in hours
+wt_route=""; //Full list of segments
+wt_countries=""; //Full list of countries
+wt_cpair=""; //Full list of itineraries
+wt_apurchcat=""; //Advance purchase
+wt_services=""; // non air segments
+
+var dcode = new Array(); // departure codes
+var dctry = new Array(); // departure countries
+var acode = new Array(); // arrival codes
+var actry = new Array(); // arrival countries
+var ddate = new Array(); // departure dates
+var ddatems = new Array(); // departure dates in ms
+var adate = new Array(); // arrival dates
+var adatems = new Array(); // arrival dates in ms
+var fnumb = new Array(); // flight numbers
+var alcode = new Array(); // airline codes
+var segmentminutes = new Array(); // segment flight times, in minutes
+var ArVal = new Array();
+ArFcde = ["nbTrav","pnrCabin","officeId","currency","totalPrice","pnrNbr","pnrTicketingMethod","SITE","language","pnrGDS","pnrCreationDate","custom_templateName","initialOfficeId"];
+ArTnme = ["CMTL","CMTR","GENERR"];
+
+// Variables initialization from custom dhtml
+for (i=0;i<ArFcde.length;i++) {
+	if(document.getElementById(ArFcde[i])){
+		ArVal[i] = document.getElementById(ArFcde[i]).value;
+	}
+	else ArVal[i] = "";
+}
+
+if (document.body.id){tnme = document.body.id.toUpperCase();}
+else {tnme = "NotBookingEngine";}
+
+// For CMTR we retrieve more details
+if (tnme == "CMTR") {
+	i=0;
+	j=0;
+	totalsegments=0;
+	totalflighttime=0;
+	while (document.getElementById("departureCode_" + i + "_" + j)) {
+		dcode[i] = new Array(); dctry[i] = new Array();
+		acode[i] = new Array(); actry[i] = new Array();
+		ddatems[i] = new Array(); ddate[i] = new Array(); adate[i] = new Array(); adatems[i] = new Array();
+		fnumb[i] = new Array(); alcode[i] = new Array(); segmentminutes[i] = new Array();
+		while (document.getElementById("departureCode_" + i + "_" + j)) {
+			depcode = "departureCode_" + i + "_" + j;
+			depcountry = "departureCountryCode_" + i + "_" + j;
+			arrcode = "arrivalCode_" + i + "_" + j;
+			arrcountry = "arrivalCountryCode_" + i + "_" + j;
+			depdate = "departureDate_" + i + "_" + j;
+			arrdate = "arrivalDate_" + i + "_" + j;
+			fnumber = "flightNumber_" + i + "_" + j;
+			airline = "airlineName_" + i + "_" + j;
+			airlinecode = "airlineCode_" + i + "_" + j;
+
+			dcode[i][j] = document.getElementById(depcode).value;
+			dctry[i][j] = document.getElementById(depcountry).value;
+			acode[i][j] = document.getElementById(arrcode).value;
+			actry[i][j] = document.getElementById(arrcountry).value;
+			ddate[i][j] = document.getElementById(depdate).value.slice(4,10) + " " + Right(document.getElementById(depdate).value, 4);
+			ddatems[i][j] = Date.parse(document.getElementById(depdate).value);
+			adate[i][j] = document.getElementById(arrdate).value.slice(4,10) + " " + Right(document.getElementById(arrdate).value, 4);
+			adatems[i][j] = Date.parse(document.getElementById(arrdate).value);
+			fnumb[i][j] = document.getElementById(fnumber).value;				
+			alcode[i][j] = document.getElementById(airlinecode).value;
+			
+			segmentminutes[i][j] = minutes_between(ddatems[i][j],adatems[i][j]);
+			totalflighttime = totalflighttime + segmentminutes[i][j];
+			wt_flights = wt_flights + (wt_flights != "" ? "_" : "") + alcode[i][j];
+			wt_route = wt_route + (wt_route != "" ? "_" : "") + dcode[i][j] + "-" + acode[i][j];
+			wt_countries = wt_countries + (wt_countries != "" ? "_" : "") + dctry[i][j] + "-" + actry[i][j];
+			
+			totalsegments++;
+			j++;
+		}
+		j=0;
+		i++;
+	}
+	citypairs = dcode.length;
+	if (citypairs > 0) {
+		for (i=0;i<citypairs;i++) {
+			wt_cpair = wt_cpair + (wt_cpair != "" ? "_" : "") + dcode[i][0] + "-" + acode[i][acode[i].length-1];
+		}
+		totalflighttime = Math.round(totalflighttime/60);
+		var curdate = new Date();
+		advancepurchase = days_between(curdate.getTime(), ddatems[0][0]);
+		wt_origin = (!dcode[0][0] ? "" : dcode[0][0]);
+		wt_destination = (!acode[0][acode[0].length-1] ? "" : acode[0][acode[0].length-1]);
+		wt_countryfrom = (!dctry[0][0] ? "" : dctry[0][0]);
+		wt_countryto = (!actry[0][actry[0].length-1] ? "" : actry[0][actry[0].length-1]);
+		wt_ddate = (!ddate[0][0] ? "" : ddate[0][0]);
+		wt_numcitypairs = (!citypairs ? "" : citypairs);
+		wt_numsegments = (!totalsegments ? "" : totalsegments);
+		wt_flighthrs = (!totalflighttime ? "" : totalflighttime);
+		wt_advpurch = (!advancepurchase ? "" : advancepurchase);
+		rtowin = "RT";
+		if (citypairs == 1) {rtowin = "OW";}
+		if (citypairs > 2) {rtowin = "MULTI";}	
+		for(i=0;i<=151;i=i+30){
+			j=i+30;
+			if (wt_advpurch > 0 && wt_advpurch <= 30) {wt_apurchcat = "30 days or less"; break;}
+			else if (wt_advpurch > i && wt_advpurch <= j) {wt_apurchcat = (i+1) + " to " + j + " days"; break;}
+		}
+		if (wt_apurchcat == "" && wt_advpurch > 180) wt_apurchcat = "more than 180 days";
+	}
+	wt_office = (!ArVal[2] ? "" : ArVal[2]);
+	wt_pax = (!ArVal[0] ? "" : ArVal[0]);
+	wt_currency = (!ArVal[3] ? "" : ArVal[3]);
+	if (document.getElementById("hasCar")) {
+		wt_services = "C";
+	}
+	if (document.getElementById("hasHotel")) {
+		wt_services = wt_services + (wt_services != "" ? "_" : "") + "H";
+	}
+	if (document.getElementById("hasTrain")) {
+		wt_services = wt_services + (wt_services != "" ? "_" : "") + "T";
+	}
+}
+data_isInitialized = true;
+}
+// Only available after these elements display
+// Will have to add this to custom panel
+if (tnme == "CMTR") {
+if (document.getElementById("conf_cars")) {
+	wt_services = "C";
+}
+if (document.getElementById("conf_hotel1")) {
+	wt_services = wt_services + (wt_services != "" ? "_" : "") + "H";
+}
+if (document.getElementById("tabTrainReview_0")) {
+	wt_services = wt_services + (wt_services != "" ? "_" : "") + "T";
+}
+}
+//end flight variable calculations
+</SCRIPT>
+
+<SCRIPT type=text/javascript src="https://ssl.google-analytics.com/urchin.js"></SCRIPT>
+
+<SCRIPT type=text/javascript>
+function getPageId() {
+	if (tnme == ArTnme[0]) {pageid = "1-CMT-Login";}
+	else if (tnme == ArTnme[1]) {pageid = "2-CMT-Reservation";}
+	else if (tnme == ArTnme[2]) {pageid = "3-CMT-Error";}
+	else {
+		// Read the page URL 
+		curl = document.location.toString();
+		// identify action
+		urlf = curl.lastIndexOf("/");
+		urlt = curl.lastIndexOf(".action");
+		pageid = curl.slice(urlf+1,urlt);
+	}
+	return pageid;
+}
+
+function sendGoogleData() {
+	// Google Accounts
+	ga1="UA-1201245-3"; //1A CMT
+	ga2="";
+	ga3="";
+	// Google final URL
+	gd1="";	
+	// Company (used for Finnair)
+	cmpany="";
+	// Page identifier
+	urltfla = getPageId();
+	// current url
+	curl = document.location.toString();
+	urlf = curl.lastIndexOf(".com");
+	urlt = curl.lastIndexOf(".");
+	url = curl.slice(urlf+4,urlt);
+	var currdomain = document.domain; var refurl = document.referrer.toString().replace("http://","").replace("https://",""); var refdomain = refurl.slice(0,refurl.indexOf("/"));
+	
+	if (refdomain == "www.finnair.com" || wt_flights.slice(0,2) == "AY") {
+		cmpany = "AY";
+		ga2 = "UA-1799677-8"
+	}
+	
+	//write URL string for GA	
+	if (tnme == "CMTR") {	
+		gd1 = url + "?&wt_company=" + cmpany + "&wt_pagename=" + urltfla + "&wt_officeid=" + ArVal[2] + "&wt_pagecode=" + tnme + "&wt_language=" + ArVal[8] + "&wt_sudefv1=" + wt_origin + "&wt_sudefv2=" + "FLOWNAME" + "&wt_sudefv3=" + wt_pax + "&wt_sudefv4=" + wt_numcitypairs + "&wt_sudefv5=" + wt_numsegments + "&wt_sudefv6=" + ArVal[2] + "&wt_sudefv7=" + wt_apurchcat + "&wt_sudefv8=" + ArVal[8] + "&wt_sudefv9=" + "" + "&wt_sudefv10=" + wt_ddate + "&wt_sudefv11=" + wt_flighthrs; 
+	}
+	else if (tnme == "NotBookingEngine") {
+		gd1 = url + "?&wt_company=" + cmpany + "&wt_pagename=" + url;
+	}
+	else  {
+		gd1 = url + "?&wt_company=" + cmpany + "&wt_pagename=" + urltfla + "&wt_officeid=" + ArVal[2] + "&wt_pagecode=" + tnme + "&wt_language=" + ArVal[8];
+	}
+	
+	// Send data to Google
+	_udn="none"; _ulink=1;
+	if (ga1 != "") { _uacct = ga1; urchinTracker(gd1); }
+	if (ga2 != "") {_uff=0; _uacct = ga2; urchinTracker(gd1);}
+	if (ga3 != "") {_uff=0; _uacct = ga3; urchinTracker(gd1);}
+	
+	// code for the retrieve page
+	if (tnme == "CMTR") {
+		naamount = .01;
+		wt_pax = 1;
+		tid = "&wt_company=" + cmpany + "&wt_officeid=" + ArVal[2] + "&wt_iofficeid=" + ArVal[12] + "&wt_language=" + ArVal[8] + "&wt_site=" + ArVal[7] + "&wt_pnrlocator=" + ArVal[5] + "&wt_cpair=" + wt_cpair + "&wt_route=" + wt_route;
+		airiid = "&wt_company=" + cmpany + "&wt_cpair=" + wt_cpair + "&wt_route=" + wt_route + "&wt_officeid=" + ArVal[2] + "&wt_flights=" + wt_flights + "&wt_countries=" + wt_countries + "&wt_pnrcabin=" + ArVal[1];
+		document.write('<form style="display:none;" name="utmform">');
+		document.write('<textarea id="utmtrans">');
+		document.write('UTM:T|' + tid + '|' + ArVal[7] +'|' + naamount +'|'+ naamount + '|' + naamount + '|' + 'paymentCCCity' +'|NA|' + 'paymentCCCountry');	
+		document.write('UTM:I|' + tid + '|' + airiid + '|' + airiid + '|' + airiid + '|' + naamount +'|' + wt_pax);	
+		document.write('</textarea>');
+		document.write('</form>');	
+		if (ga1 != "") { _uacct = ga1; __utmSetTrans(); }
+		if (ga2 != "") { _uacct = ga2; __utmSetTrans(); }
+		if (ga3 != "") { _uacct = ga3; __utmSetTrans(); }
+	}
+}
+
+function sendXitiData() {
+<!-- XiTi population tag : registered site -->
+<!--
+xt_at = ArVal[5];
+xt_ac = ""; // category
+//do not modify below
+if (window.xtparam!=null){window.xtparam+="&ac="+xt_ac+"&at="+xt_at;}
+else{window.xtparam = "&ac="+xt_ac+"&at="+xt_at;};
+//-->	
+<!-- end XiTi population tag : registered site -->
+
+if (tnme == "CMTR") {
+<!-- XiTi multicriteria tag : registered site -->
+<!--
+xt_multc = "&x1=" + wt_origin + "&x2=" + ArVal[12] + "&x3=" + wt_destination + "&x4=" + ArVal[8] + "&x5=" + wt_services + "&x6=" + wt_cpair + "&x7=" + wt_flights + "&x8=" + wt_countryfrom + "&x9=" + wt_countryto + "&x10=" + ArVal[1] + "&x11=" + rtowin + "&x12=" + wt_flighthrs;
+	
+//do not modify below
+if (window.xtparam!=null){window.xtparam+=xt_multc;}
+else{window.xtparam =xt_multc;};
+//-->
+<!-- end XiTi multicriteria tag : registered site -->	
+}
+	
+<!-- XiTi content tag -->
+<!--
+xtnv = document;
+xtsd = "https://logs177";
+xtsite = "423445";
+xtn2 = "";
+xtpage = getPageId();
+xtdi = "";
+//-->
+<!-- end XiTi content tag -->
+}
+
+sendGoogleData();
+sendXitiData();
+</SCRIPT>
+
+<FORM style="DISPLAY: none" name=utmform><TEXTAREA id=utmtrans>UTM:T|&amp;wt_company=&amp;wt_officeid=NCE1A0RTI&amp;wt_iofficeid=FLNB2212M&amp;wt_language=GB&amp;wt_site=&amp;wt_pnrlocator=X792MS&amp;wt_cpair=FRA-LIS_LIS-BSB_BSB-CGB_CGB-IGU_IGU-CWB_GIG-FRA&amp;wt_route=FRA-LIS_LIS-BSB_BSB-CGB_CGB-BSB_BSB-IGU_IGU-CWB_GIG-LIS_LIS-FRA||0.01|0.01|0.01|paymentCCCity|NA|paymentCCCountryUTM:I|&amp;wt_company=&amp;wt_officeid=NCE1A0RTI&amp;wt_iofficeid=FLNB2212M&amp;wt_language=GB&amp;wt_site=&amp;wt_pnrlocator=X792MS&amp;wt_cpair=FRA-LIS_LIS-BSB_BSB-CGB_CGB-IGU_IGU-CWB_GIG-FRA&amp;wt_route=FRA-LIS_LIS-BSB_BSB-CGB_CGB-BSB_BSB-IGU_IGU-CWB_GIG-LIS_LIS-FRA|&amp;wt_company=&amp;wt_cpair=FRA-LIS_LIS-BSB_BSB-CGB_CGB-IGU_IGU-CWB_GIG-FRA&amp;wt_route=FRA-LIS_LIS-BSB_BSB-CGB_CGB-BSB_BSB-IGU_IGU-CWB_GIG-LIS_LIS-FRA&amp;wt_officeid=NCE1A0RTI&amp;wt_flights=TP_TP_G3_G3_G3_G3_TP_TP&amp;wt_countries=DE-PT_PT-BR_BR-BR_BR-BR_BR-BR_BR-BR_BR-PT_PT-DE&amp;wt_pnrcabin=R|&amp;wt_company=&amp;wt_cpair=FRA-LIS_LIS-BSB_BSB-CGB_CGB-IGU_IGU-CWB_GIG-FRA&amp;wt_route=FRA-LIS_LIS-BSB_BSB-CGB_CGB-BSB_BSB-IGU_IGU-CWB_GIG-LIS_LIS-FRA&amp;wt_officeid=NCE1A0RTI&amp;wt_flights=TP_TP_G3_G3_G3_G3_TP_TP&amp;wt_countries=DE-PT_PT-BR_BR-BR_BR-BR_BR-BR_BR-BR_BR-PT_PT-DE&amp;wt_pnrcabin=R|&amp;wt_company=&amp;wt_cpair=FRA-LIS_LIS-BSB_BSB-CGB_CGB-IGU_IGU-CWB_GIG-FRA&amp;wt_route=FRA-LIS_LIS-BSB_BSB-CGB_CGB-BSB_BSB-IGU_IGU-CWB_GIG-LIS_LIS-FRA&amp;wt_officeid=NCE1A0RTI&amp;wt_flights=TP_TP_G3_G3_G3_G3_TP_TP&amp;wt_countries=DE-PT_PT-BR_BR-BR_BR-BR_BR-BR_BR-BR_BR-PT_PT-DE&amp;wt_pnrcabin=R|0.01|1</TEXTAREA></FORM>
+<SCRIPT type=text/javascript src="https://tag.xiti.com/xtcore423445.js"></SCRIPT>
+</BODY></HTML>
